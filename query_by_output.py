@@ -1,13 +1,14 @@
 from utils import decision_tree
 from utils import query
 from utils import multiEncoding
-from utils import function
+import function
 import pandas as pd
 import csv
 import itertools
 import time
 
 start_time = time.time()
+
 
 def load(file_name):
     """
@@ -54,8 +55,6 @@ def loadBig(file_name):
         reader = csv.reader(f)
         data = list(reader)
 
-    x = data[0]
-
     schema = [x.strip() for x in data[0]]
     table = [[int(el) for el in row] for row in data[1:]]
 
@@ -77,14 +76,13 @@ def process(db_file, example_file, table_names):
     (db_schema, db_table) = loadBig(db_file)
     (example_schema, example_table) = load(example_file)
 
-    # print("------DB-------")
+    print("------DB-------")
+    print(db_schema)
     # print(db_table)
 
-    # print(db_schema)
-
-    # print("------EXAMPLE------")
-    # print(example_table)
-    # print(example_schema)
+    print("------EXAMPLE------")
+    print(example_table)
+    print(example_schema)
 
     # finds which columns are to be projected away
     missing = [index for (index, x) in enumerate(db_schema) if x not in example_schema]
@@ -95,7 +93,7 @@ def process(db_file, example_file, table_names):
         # print(str(annotated_table))
         return
 
-    # print("------DECORATED TABLE------")
+    print("------DECORATED TABLE------")
     # print(missing)
     # print(annotated_table)
 
@@ -124,11 +122,10 @@ def process(db_file, example_file, table_names):
     return queries
 
 
-def createExample(db_file, example_file):
+def query_creator(db_file, example_file):
     print()
     df = pd.read_csv(db_file)
     find = loadExample(example_file)
-    found = []
     final = []
     for string in find:
         found = []
@@ -158,46 +155,45 @@ def createExample(db_file, example_file):
 
 if __name__ == '__main__':
 
-    """
-    Nel main all'inizio chiamo il metodo process sul database della sorgente con il suo esempio poi chiamo il 
-    metodo createExample passando il database del target e le tuple presenti nell' esempio passato alla sorgente 
+    """Nel main all'inizio chiamo il metodo process sul database della sorgente con il suo esempio
+    poi chiamo il metodo query_creator passando il database del target e le tuple presenti nell'esempio passato alla sorgente
 
     Quando ho le liste di IEQs sia della sorgente che del target le confronto e salvo in una lista di array i valori
-    ottenuti dal confronto. Seleziono l' array con i valori più alti e a questo punto so quale lista di query del target
+    ottenuti dal confronto. Seleziono l'array con i valori più alti e a questo punto so quale lista di query del target
     è più simile alle query della sorgente.
 
     Ora incremento i valori della matrice facendo il confronto tra le query della sorgente e le query del target appena
-    selezionate. La matrice la inizializzo esternamente
-    """
+    selezionate. La matrice la inizializzo esternamente"""
 
     table_names = ["imdb"]
 
     # fin = process("ClooneySource.csv", "TonyExample.csv", table_names)
     # fin = process("jodieSource.csv", "JodieExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","2014example.csv", table_names)
-    # fin = process("sources/angeEthanSource2.csv","sources/MusicExample.csv", table_names)
-    # fin = process("angeEthanSource2.csv", "AngelinaExample.csv", table_names)
+    # fin = process("angeEthanSource2.csv","MusicExample.csv", table_names)
+    # fin = process("angeEthanSource2.csv","AngelinaExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","137Angelina.csv", table_names)
-    fin = process ("sources/burt/BurtReynoldsSource.csv","sources/burt/BurtExample.csv",table_names)
+    fin = process("sources/burt/BurtReynoldsSource.csv", "sources/burt/BurtExample.csv", table_names)
     # fin = process("RidleySource.csv", "RidleyExample.csv", table_names)
     # fin = process ("126Source.csv","126Example.csv",table_names)
 
     for string in fin:
         print(string)
 
-    # pro = createExample("ClooneyTarget.csv","TonyLine.csv")
-    # pro = createExample("JodieTarget.csv","JodieLine.csv")
-    # pro = createExample("angeEthanTarget.csv","2014line.csv")
-    # pro = createExample("angeEthanTarget.csv","MusicLine.csv")
-    # pro = createExample("angeEthanTarget.csv", "AngelinaLine.csv")  # ci impiega tanto, 270 secondi
-    # pro = createExample("angeEthanTarget.csv","137line.csv")
-    pro = createExample("sources/burt/burtReynoldsTarget.csv","sources/burt/BurtLine.csv")
-    # pro = createExample("RidleyTarget.csv","RidleyLine.csv")
-    # pro = createExample("126Target.csv","126Line.csv")
+    # pro = query_creator("ClooneyTarget.csv","TonyLine.csv")
+    # pro = query_creator("JodieTarget.csv","JodieLine.csv")
+    # pro = query_creator("angeEthanTarget.csv","2014line.csv")
+    # pro = query_creator("angeEthanTarget.csv","MusicLine.csv")
+    # pro = query_creator("angeEthanTarget.csv","AngelinaLine.csv") #ci impiega tanto, 270 secondi
+    # pro = query_creator("angeEthanTarget.csv","137line.csv")
+    pro = query_creator("sources/burt/BurtReynoldsTarget.csv", "sources/burt/BurtLine.csv")
+    # pro = query_creator("RidleyTarget.csv","RidleyLine.csv")
+    # pro = query_creator("126Target.csv","126Line.csv")
 
     print(pro)
 
-    pro = list(filter(None.__ne__, pro))
+    pro = filter(None.__ne__, pro)
+    pro = list(pro)
 
     s1 = []
     for i in range(len(fin)):
@@ -248,7 +244,7 @@ if __name__ == '__main__':
                     # Con questa chiamata avrò in partialList un valore per la prima stringa dell'and e un
                     # valore per la seconda stringa dell'and. Ora ne faccio la media e salvo il valore in finalL
                 totFirst.append(sum(partialFirst) / len(first))
-            # se la stringa è un'unica condizione posso chiamare subito la funzione che mi tornerà il valore massimo di
+                # se la stringa è un'unica condizione posso chiamare subito la funzione che mi tornerà il valore massimo di
             # similarità della stringa first con un blocco di query del target
             else:
                 totFirst.append(function.calculationAnd(stringFirstList, listSecondList))
@@ -322,7 +318,6 @@ if __name__ == '__main__':
         else:
             function.findAttribute(stringFirstList, s21[indice])
 
-    matrix = pd.read_csv("matrix.csv")
-    print("MATRIX:")
-    print(matrix)
+    matrix = pd.read_csv("matrix.csv");
+    print(matrix);
 
