@@ -317,7 +317,6 @@ if __name__ == '__main__':
                 function.findAttribute(string, s21[indice])
         else:
             function.findAttribute(stringFirstList, s21[indice])
-
-    matrix = pd.read_csv("matrix.csv");
-    print(matrix);
+    matrix = pd.read_csv("matrix.csv")
+    print(matrix)
 
