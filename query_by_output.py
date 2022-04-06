@@ -1,7 +1,6 @@
 from utils import decision_tree
 from utils import query
-from utils import multiEncoding
-import function
+from utils import function
 import pandas as pd
 import csv
 import itertools
@@ -10,62 +9,30 @@ import time
 start_time = time.time()
 
 
-def load(file_name):
+def load(file_name, output_file):
     """
     Loads a csv file and separates the attribute names from the actual rows
-    :param file_name:
-    :return:
-    """
-    # db = multiEncoding.encode(file_name)
-    # otteniamo la stessa cosa utilizzando get_dummies, ho lasciato comunque implementato one_hot encoding di sklearn
-    # ma non lo utilizzo
-
-    db = pd.read_csv(file_name)
-    db = pd.get_dummies(db, prefix_sep='*')
-    """I'm creating a csv file that will be read from the function after"""
-
-    db.to_csv('enc.csv', index=False)
-
-    with open('enc.csv', newline='', encoding="utf-8") as f:
-        reader = csv.reader(f)
-        data = list(reader)
-
-    schema = [x.strip() for x in data[0]]
-    table = [[int(el) for el in row] for row in data[1:]]
-
-    return schema, table
-
-
-def loadBig(file_name):
-    """
-    Loads a csv file and separates the attribute names from the actual rows
-    :param file_name:
-    :return:
     """
     # db = multiEncoding.encode(file_name)
     db = pd.read_csv(file_name)
+    """
     if ("newCountry" in db.columns):
         db = db.drop(["newLanguage", "newCountry"], axis=1)
+    """
     db = pd.get_dummies(db, prefix_sep='*')
     print(db)
     """I'm creating a csv file that will be read from the function after"""
-    db.to_csv('big.csv', index=False)
-
-    with open('big.csv', newline='', encoding="utf-8") as f:
-        reader = csv.reader(f)
-        data = list(reader)
-
+    db.to_csv(output_file, index=False)
+    with open(output_file, newline='', encoding="utf-8") as f:
+        data = list(csv.reader(f))
     schema = [x.strip() for x in data[0]]
     table = [[int(el) for el in row] for row in data[1:]]
-
     return schema, table
 
 
 def loadExample(file_name):
     with open(file_name, newline='') as f:
-        reader = csv.reader(f)
-        data = list(reader)
-
+        data = list(csv.reader(f))
     schema = [x.strip() for x in data[0]]
     return schema
 
@@ -73,8 +40,8 @@ def loadExample(file_name):
 def process(db_file, example_file, table_names):
     print()
     print("----------Loading: " + db_file + "," + example_file + " tables: " + str(table_names) + "----------")
-    (db_schema, db_table) = loadBig(db_file)
-    (example_schema, example_table) = load(example_file)
+    (db_schema, db_table) = load(db_file, "data/big.csv")
+    (example_schema, example_table) = load(example_file, "data/enc.csv")
 
     print("------DB-------")
     print(db_schema)
@@ -147,8 +114,8 @@ def query_creator(db_file, example_file):
     li = []
     for string in combination:
         ex = pd.DataFrame([find], columns=list(string))
-        ex.to_csv("col.csv", index=False)
-        s = process(db_file, "col.csv", table_names)
+        ex.to_csv("data/col.csv", index=False)
+        s = process(db_file, "data/col.csv", table_names)
         li.append(s)
     return li
 
@@ -317,6 +284,5 @@ if __name__ == '__main__':
                 function.findAttribute(string, s21[indice])
         else:
             function.findAttribute(stringFirstList, s21[indice])
-    matrix = pd.read_csv("matrix.csv")
+    matrix = pd.read_csv("data/matrix.csv")
     print(matrix)
-

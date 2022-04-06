@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun  4 17:21:45 2021
 
-@author: gabri
-"""
 from fuzzywuzzy import fuzz
 import pandas as pd
 
@@ -612,7 +607,7 @@ def findAttribute(first, second):
 # potrebbe essere che ho più di un attributo nella clausola where, dovrei divederli
 
 def increaseMatrix(first, second, per):
-    matrix = pd.read_csv("matrix.csv")
+    matrix = pd.read_csv("data/matrix.csv")
     # first = first.split("((",1)[1]
     # second = second.split(" ((",1)[1]
     first = first.replace(" ", "")
@@ -628,5 +623,4 @@ def increaseMatrix(first, second, per):
         if (r == first):
             row = i
     matrix.loc[matrix.index[row], matrix.columns[col]] += 1 * (per / 100)
-
-    matrix.to_csv("matrix.csv", index_label=False)
+    matrix.to_csv("data/matrix.csv", index_label=False)
