@@ -2,35 +2,38 @@ from sklearn import tree
 from heapq import nsmallest
 
 
-def find_threshold(table, attributeColumn):
+def find_threshold(table, attribute_column):
     """
     Given a decorated table and a column index to use, returns the optimal threshold to use and its gini value
     :param table: the decorated table( table[0] contains the target of each row)
-    :param attributeColumn: the column to use
+    :param attribute_column: the column to use
     :return: pair threshold,gini
     """
     # use sklearn's decision tree to find the best split value
     clf = tree.DecisionTreeClassifier()
-    dataset = ([x[attributeColumn]] for x in table)
+    dataset = ([x[attribute_column]] for x in table)
     target = (x[0] for x in table)
     clf = clf.fit(list(dataset), list(target))
-    threshold = clf.tree_.threshold[0].item()
+    """threshold = clf.tree_.threshold[0].item()"""
+    threshold = 0.5
     gini = clf.tree_.impurity[0].item()
-    return threshold, gini
+    return gini
 
 
-def divide(table, attributeColumn):
+def divide(table, attribute_column):
     """
     Given a decorated table and a column index to use, splits the table according to the optimal threshold
     :param table: the decorated table
-    :param attributeColumn: the column to uyse
-    :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a table with the other rows, the threshold and the gini value
+    :param attribute_column: the column to uyse
+    :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a table with the other rows, the
+            threshold and the gini value
     """
     # find best threshold
-    threshold, gini = find_threshold(table, attributeColumn)
+    threshold = 0.5
+    gini = find_threshold(table, attribute_column)
     # split using the found threshold
-    left = [x for x in table if x[attributeColumn] <= threshold]
-    right = [x for x in table if x[attributeColumn] > threshold]
+    left = [x for x in table if x[attribute_column] <= threshold]
+    right = [x for x in table if x[attribute_column] > threshold]
     # if not left or not right:  # if left or right are empty this split should be discarded
     if len(left) == 0 or len(right) == 0:
         gini = 999
@@ -71,10 +74,7 @@ def split_gini(s1, s2):
     :param s2: second table
     :return: gini value
     """
-    gini12 = (len(s1) * single_gini(s1)) + (len(s2) * single_gini(s2))
-    gini12 = gini12 / (len(s1) + (len(s2)))
-    assert gini12 >= 0.0
-    return gini12
+    return (len(s1) * single_gini(s1)) + (len(s2) * single_gini(s2)) / (len(s1) + len(s2))
 
 
 def attribute_score(table):
@@ -167,13 +167,13 @@ def make_tree(table):
     right = []
     threshold = []
     gini = []
-    attributeColumn = []
+    attribute_column = []
     for i in gen:
         left.append(i[0])
         right.append(i[1])
         threshold.append(i[2])
         gini.append(i[3])
-        attributeColumn.append(i[4])
+        attribute_column.append(i[4])
     case = 1
     if case == 1:
         # case C1 puts as positive all free tuples
@@ -196,4 +196,4 @@ def make_tree(table):
             left[i] = list(make_tree(left[i]))[0]
             right[i] = list(make_tree(right[i]))[0]
     for i in index:
-        yield Tree(left[i], right[i], threshold[i], attributeColumn[i])
+        yield Tree(left[i], right[i], threshold[i], attribute_column[i])

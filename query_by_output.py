@@ -4,9 +4,6 @@ from utils import function
 import pandas as pd
 import csv
 import itertools
-import time
-
-start_time = time.time()
 
 
 def load(file_name, output_file):
@@ -121,19 +118,14 @@ def query_creator(db_file, example_file):
 
 
 if __name__ == '__main__':
-
     """Nel main all'inizio chiamo il metodo process sul database della sorgente con il suo esempio
     poi chiamo il metodo query_creator passando il database del target e le tuple presenti nell'esempio passato alla sorgente
-
     Quando ho le liste di IEQs sia della sorgente che del target le confronto e salvo in una lista di array i valori
     ottenuti dal confronto. Seleziono l'array con i valori più alti e a questo punto so quale lista di query del target
     è più simile alle query della sorgente.
-
     Ora incremento i valori della matrice facendo il confronto tra le query della sorgente e le query del target appena
     selezionate. La matrice la inizializzo esternamente"""
-
     table_names = ["imdb"]
-
     # fin = process("ClooneySource.csv", "TonyExample.csv", table_names)
     # fin = process("jodieSource.csv", "JodieExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","2014example.csv", table_names)
@@ -143,10 +135,8 @@ if __name__ == '__main__':
     fin = process("sources/burt/BurtReynoldsSource.csv", "sources/burt/BurtExample.csv", table_names)
     # fin = process("RidleySource.csv", "RidleyExample.csv", table_names)
     # fin = process ("126Source.csv","126Example.csv",table_names)
-
     for string in fin:
         print(string)
-
     # pro = query_creator("ClooneyTarget.csv","TonyLine.csv")
     # pro = query_creator("JodieTarget.csv","JodieLine.csv")
     # pro = query_creator("angeEthanTarget.csv","2014line.csv")
@@ -156,12 +146,8 @@ if __name__ == '__main__':
     pro = query_creator("sources/burt/BurtReynoldsTarget.csv", "sources/burt/BurtLine.csv")
     # pro = query_creator("RidleyTarget.csv","RidleyLine.csv")
     # pro = query_creator("126Target.csv","126Line.csv")
-
     print(pro)
-
-    pro = filter(None.__ne__, pro)
-    pro = list(pro)
-
+    pro = [x for x in pro if x is not None]
     s1 = []
     for i in range(len(fin)):
         s1.append(fin[i].split("WHERE ", 1)[1])
@@ -172,7 +158,6 @@ if __name__ == '__main__':
             s2.append(string.split("WHERE", 1)[1])
         s21.append(s2)
     finalLL = []
-
     """Confronto delle query chiamando la funzione calculationAnd presente nel file function.py"""
     for listSecondList in s21:
         totFirst = []
@@ -221,17 +206,14 @@ if __name__ == '__main__':
         # Il primo elemento di finallLL corrisponde al paragone tra le query della sorgente e la prima lista di query del target
         print(totFirst)
         finalLL.append(totFirst)
-
     # con questo for vado a mettere in ordine i valori in finalLL così da poter poi selezionare la lista migliore
     print(finalLL)
     valuesSorted = finalLL
     for string in valuesSorted:
         string.sort(reverse=True)
-
     massimo = valuesSorted[0][0]
     indice = 0
     i = 1
-
     # con questo while controllo quale è la lista migliore andando a confrontare i vari valori di ogni lista
     # avendo ordinato ogni lista so che il primo elemento è il valore massimo e quindi faccio un confronto tra i primi
     # elementi, se sono uguali proseguo con il secondo elemento e in caso il terzo elemento. Salvo l'indice che mi
@@ -249,10 +231,8 @@ if __name__ == '__main__':
                     indice = i
                 # cosa faccio se tutti e tre i valori sono uguali (molto improbabile ma magari succede)
         i = i + 1
-
     print(valuesSorted)
     print(indice)
-
     # incremento della matrice solo con la clausola select
     select1 = fin[0].split("FROM", 1)[0];
     select1 = select1.split("SELECT", 1)[1];
@@ -265,7 +245,6 @@ if __name__ == '__main__':
     else:
         function.increaseMatrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
         function.increaseMatrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
-
     """Incremento della matrice con i valori nelle where-clauses"""
     for stringFirstList in s1:
         stringFirstList = stringFirstList.replace(")", "")
