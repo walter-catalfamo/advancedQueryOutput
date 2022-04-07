@@ -105,11 +105,9 @@ def tree_to_query(input_schema, tables, joined_schema, tree):
     :param tree: the Tree
     :return: the SQL query
     """
-
     select = select_segment(input_schema)
     frm = from_segment(tables)
     where = where_segment(joined_schema, tree)
-
     return select + frm + where
 
 

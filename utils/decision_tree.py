@@ -28,17 +28,14 @@ def divide(table, attribute_column):
     :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a table with the other rows, the
             threshold and the gini value
     """
-    # find best threshold
     threshold = 0.5
-    gini = find_threshold(table, attribute_column)
-    # split using the found threshold
     left = [x for x in table if x[attribute_column] <= threshold]
     right = [x for x in table if x[attribute_column] > threshold]
     # if not left or not right:  # if left or right are empty this split should be discarded
     if len(left) == 0 or len(right) == 0:
         gini = 999
     else:
-        gini = split_gini(left, right)
+        gini = split_gini(left, right) * find_threshold(table, attribute_column)
     return left, right, threshold, gini
 
 
@@ -174,12 +171,10 @@ def make_tree(table):
         threshold.append(i[2])
         gini.append(i[3])
         attribute_column.append(i[4])
-    case = 1
-    if case == 1:
-        # case C1 puts as positive all free tuples
-        for i in range(len(left)):
-            update_free(left[i], 1)
-            update_free(right[i], 1)
+    # case C1 puts as positive all free tuples
+    for i in range(len(left)):
+        update_free(left[i], 1)
+        update_free(right[i], 1)
     # build left and right subtrees
     """"seleziono solo i 3 alberi con il gini migliore su tutti gli split possibili e continuo a dividere l'albero solo 
     da questi."""

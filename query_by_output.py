@@ -39,46 +39,35 @@ def process(db_file, example_file, table_names):
     print("----------Loading: " + db_file + "," + example_file + " tables: " + str(table_names) + "----------")
     (db_schema, db_table) = load(db_file, "data/big.csv")
     (example_schema, example_table) = load(example_file, "data/enc.csv")
-
     print("------DB-------")
     print(db_schema)
     # print(db_table)
-
     print("------EXAMPLE------")
     print(example_table)
     print(example_schema)
-
     # finds which columns are to be projected away
     missing = [index for (index, x) in enumerate(db_schema) if x not in example_schema]
     annotated_table, ok = query.decorate_table(example_table, missing, db_table)
-
     if not ok:
         print("No query can be found to match a row in the example: ")
         # print(str(annotated_table))
         return
-
     print("------DECORATED TABLE------")
     # print(missing)
     # print(annotated_table)
-
     # print(db_schema)
     db_schema.insert(0, "I SHOULD NOT BE VISIBLE")
-
     # print(annotated_table)
-
     genTree = decision_tree.make_tree(annotated_table)
     tree = []
     for i in genTree:
         tree.append(i)
-
     print("-------TREE-------")
-
     for i in tree:
         print(i)
     """It is probably inefficient to load two times the example db but for now I don't have a better idea
     another idea could be to "calculate" the string names knowing that the two strings are separeted with _"""
     example_schema = loadExample(example_file)
-
     """In this other case I'm not going to load the df another time but I will study the columns name already encoded."""
     queries = []
     for i in range(len(tree)):
@@ -117,6 +106,7 @@ def query_creator(db_file, example_file):
     return li
 
 
+
 if __name__ == '__main__':
     """Nel main all'inizio chiamo il metodo process sul database della sorgente con il suo esempio
     poi chiamo il metodo query_creator passando il database del target e le tuple presenti nell'esempio passato alla sorgente
@@ -125,6 +115,14 @@ if __name__ == '__main__':
     è più simile alle query della sorgente.
     Ora incremento i valori della matrice facendo il confronto tra le query della sorgente e le query del target appena
     selezionate. La matrice la inizializzo esternamente"""
+    """
+    df = pd.read_csv("data\matrix.csv")
+    df.loc[df['tconst'] > 0, 'tconst'] = 0
+    df.to_csv("data\matrix.csv", index = False)
+    """
+
+
+
     table_names = ["imdb"]
     # fin = process("ClooneySource.csv", "TonyExample.csv", table_names)
     # fin = process("jodieSource.csv", "JodieExample.csv", table_names)
@@ -133,7 +131,7 @@ if __name__ == '__main__':
     # fin = process("angeEthanSource2.csv","AngelinaExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","137Angelina.csv", table_names)
     fin = process("sources/burt/BurtReynoldsSource.csv", "sources/burt/BurtExample.csv", table_names)
-    # fin = process("RidleySource.csv", "RidleyExample.csv", table_names)
+    # fin = process("sources/ridley/RidleySource.csv", "sources/ridley/RidleyExample.csv", table_names)
     # fin = process ("126Source.csv","126Example.csv",table_names)
     for string in fin:
         print(string)
@@ -144,7 +142,7 @@ if __name__ == '__main__':
     # pro = query_creator("angeEthanTarget.csv","AngelinaLine.csv") #ci impiega tanto, 270 secondi
     # pro = query_creator("angeEthanTarget.csv","137line.csv")
     pro = query_creator("sources/burt/BurtReynoldsTarget.csv", "sources/burt/BurtLine.csv")
-    # pro = query_creator("RidleyTarget.csv","RidleyLine.csv")
+    # pro = query_creator("sources/ridley/RidleyTarget.csv", "sources/ridley/RidleyLine.csv")
     # pro = query_creator("126Target.csv","126Line.csv")
     print(pro)
     pro = [x for x in pro if x is not None]
@@ -234,17 +232,17 @@ if __name__ == '__main__':
     print(valuesSorted)
     print(indice)
     # incremento della matrice solo con la clausola select
-    select1 = fin[0].split("FROM", 1)[0];
-    select1 = select1.split("SELECT", 1)[1];
-    select2 = pro[indice][0].split("FROM", 1)[0];
-    select2 = select2.split("SELECT", 1)[1];
+    select1 = fin[0].split("FROM", 1)[0]
+    select1 = select1.split("SELECT", 1)[1]
+    select2 = pro[indice][0].split("FROM", 1)[0]
+    select2 = select2.split("SELECT", 1)[1]
     if "," not in select1 and "," not in select2:
         print(select1)
         print(select2)
-        function.increaseMatrix(select1, select2, 500);
+        function.increase_matrix(select1, select2, 500, "data/initial_matrix.csv")
     else:
-        function.increaseMatrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
-        function.increaseMatrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
+        function.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
+        function.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
     """Incremento della matrice con i valori nelle where-clauses"""
     for stringFirstList in s1:
         stringFirstList = stringFirstList.replace(")", "")
