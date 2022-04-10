@@ -12,9 +12,40 @@ con le 3 stringhe del target"""
 
 # rimuovo le parentesi dalle stringhe perchè potrebbero portare a risultati leggermente diversi durante il confronto.
 
-# inoltre quando devo considerare il confronto tra interi rimuovo anche gli spazi nella stringa per poter ottenere una stringa
-# con solo caratteri numerici e quindi avere un float.
-def calculationAnd(first, second):
+# inoltre quando devo considerare il confronto tra interi rimuovo anche gli spazi nella stringa per poter ottenere
+# una stringa con solo caratteri numerici e quindi avere un float.
+
+
+def increase_matrix_element(first, second, per, matrix):
+    # first = first.split("((",1)[1]
+    # second = second.split(" ((",1)[1]
+    first = first.replace(" ", "")
+    second = second.replace(" ", "")
+    i = 0
+    row = 0
+    col = 0
+    for i in range(len(matrix.columns)):
+        if matrix.columns[i] == second:
+            col = i
+    i = 0
+    for i in range(len(matrix.index)):
+        r = matrix.index[i].replace(" ", "")
+        if r == first:
+            row = i
+    if row != 0 and col != 0:
+        matrix.loc[matrix.index[row], matrix.columns[col]] += 1 * (per / 100)
+    matrix.to_csv("data/matrix.csv", index_label=False)
+
+
+def increase_matrix(first, second, per):
+    increase_matrix_element(first, second, per, pd.read_csv("data/matrix.csv"))
+
+
+def increase_new_matrix(first, second, per):
+    increase_matrix_element(first, second, per, pd.read_csv("data/initial_matrix.csv"))
+
+
+def calculation_and(first, second):
     tot = []
     if "!=" in first:
         # se ho != nella stringa della sorgente devo verificare che anche nel target abbia != se no non ha senso il confronto
@@ -398,7 +429,7 @@ def findAttribute(first, second):
                             s2attribute = piece.split(" =", 1)[0]
                             string = piece.split("=", 1)[1]
                             partial = fuzz.ratio(s1split, string)
-                            increase_matrix(s1attribute, s2attribute, partial, "data\matrix.csv")
+                            increase_matrix(s1attribute, s2attribute, partial)
                             # se nella sorgente ho <= allora vado a controllare che anche nel target abbia <= o > e confronto gli intervalli
         # questo perchè una volta che ho verificato di avere <= o > vuol dire che sto trattando caratteri numerici
         else:
@@ -599,27 +630,3 @@ def findAttribute(first, second):
                     else:
                         partial = 100
                     increase_matrix(s1attribute, s2attribute, partial)
-
-
-def increase_matrix(first, second, per):
-    evaluate_new_matrix(first, second, pd.read_csv("data/matrix.csv"), per)
-
-
-def increase_matrix(first, second, per, filename):
-    evaluate_new_matrix(first, second, pd.read_csv(filename), per)
-
-
-def evaluate_new_matrix(first, second, matrix, per):
-    first = first.replace(" ", "")
-    second = second.replace(" ", "")
-    i = 0
-    for i in range(len(matrix.columns)):
-        if matrix.columns[i] == second:
-            col = i
-    i = 0
-    for i in range(len(matrix.index)):
-        r = matrix.index[i].replace(" ", "")
-        if r == first:
-            row = i
-    matrix.loc[matrix.index[row], matrix.columns[col]] += 1 * (per / 100)
-    matrix.to_csv("data/matrix.csv", index_label=False)

@@ -28,7 +28,10 @@ def divide(table, attribute_column):
     :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a table with the other rows, the
             threshold and the gini value
     """
+
+    """threshold = clf.tree_.threshold[0].item()"""
     threshold = 0.5
+
     left = [x for x in table if x[attribute_column] <= threshold]
     right = [x for x in table if x[attribute_column] > threshold]
     # if not left or not right:  # if left or right are empty this split should be discarded
@@ -59,8 +62,6 @@ def single_gini(s):
     pos = count_of_class(s, 1)
     neg = count_of_class(s, -1)
     gini = 1.0 - ((unass * unass) + (pos * pos) + (neg * neg))
-    assert gini >= 0.0
-    # print("pos is "+str(pos)+" neg is "+str(neg)+" unass is "+str(unass)+" gini "+str(gini))
     return gini
 
 
