@@ -44,6 +44,5 @@ def test_purity_kind():
 
 def test_query_tree():
     table = [[1, 1900, 170], [1, 0, 120], [-1, 2000, 190], [-1, 2010, 120], [-1, 1650, 200]]
-
     clf = decision_tree.make_tree(table)
     assert clf.threshold == 1950
