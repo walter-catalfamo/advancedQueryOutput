@@ -1,6 +1,7 @@
 from utils import decision_tree
 from utils import query
 from utils import function
+from utils import matrix
 import pandas as pd
 import csv
 import itertools
@@ -110,36 +111,59 @@ def query_creator(db_file, example_file):
     return li
 
 
-def select_source():
-    source = "jodie/jodieSource.csv"
-    return "sources/" + source
-
-
-def select_example():
-    example = "jodie/JodieExample.csv"
+def select_source(num):
+    if num == 1:
+        example = "jodie/jodieSource.csv"
+    elif num == 2:
+        example = "burt/BurtReynoldsSource.csv"
+    elif num == 3:
+        example = "ridley/RidleySource.csv"
     return "sources/" + example
 
 
-def select_target():
-    example = "jodie/JodieTarget.csv"
+def select_example(num):
+    if num == 1:
+        example = "jodie/JodieExample.csv"
+    elif num == 2:
+        example = "burt/BurtExample.csv"
+    elif num == 3:
+        example = "ridley/RidleyExample.csv"
     return "sources/" + example
 
 
-def select_line():
-    example = "jodie/JodieLine.csv"
+def select_target(num): # Target
+    if num == 1:
+        example = "jodie/JodieTarget.csv"
+    elif num == 2:
+        example = "burt/BurtReynoldsTarget.csv"
+    elif num == 3:
+        example = "ridley/RidleyTarget.csv"
     return "sources/" + example
+
+
+def select_line(num): # Line
+    if num == 1:
+        example = "jodie/JodieLine.csv"
+    elif num == 2:
+        example = "burt/BurtLine.csv"
+    elif num == 3:
+        example = "ridley/RidleyLine.csv"
+    return "sources/" + example
+
 
 if __name__ == '__main__':
     table_names = ["imdb"]
-    fin = process(select_source(), select_example(), table_names)
-    for string in fin:
+    selection = 2
+    queries = process(select_source(selection), select_example(selection), table_names)
+    for string in queries:
         print(string)
-    pro = query_creator(select_target(), select_line())
+    pro = query_creator(select_target(selection), select_line(selection))
     print(pro)
-    pro = [x for x in pro if x is not None]
+    pro = [x for x in pro if x is not None]  # filter list
+
     s1 = []
-    for i in range(len(fin)):
-        s1.append(fin[i].split("WHERE ", 1)[1])
+    for i in range(len(queries)):
+        s1.append(queries[i].split("WHERE ", 1)[1])
     s21 = []
     for i in range(len(pro)):
         s2 = []
@@ -152,14 +176,18 @@ if __name__ == '__main__':
         totFirst = []
         for stringFirstList in s1:
             stringFirstList = stringFirstList.replace(")", "")
-            # quando nella prima stringa ho un OR separo le due condizioni e controllo a loro volta che le condizioni non
+            # quando nella prima stringa ho un OR separo le due condizioni e controllo a loro volta che le condizioni
+            # non
             # abbiano un AND o se sono già pronte per il confronto. Se compare anche un AND splitto ancora la stringa e
-            # per le due diverse condizioni chiamo la funzione che andrò a fare il confronto di una condizione (una stringa)
+            # per le due diverse condizioni chiamo la funzione che andrò a fare il confronto di una condizione
+            # (una stringa)
             # con la lista di query del target (a seconda del ciclo for con la prima, la seconda o la terza)
             # la funzione mi ritorna il valore massimo di similarità per quella stringa sulla rispettiva lista di query.
-            # prima di salvare il valore finale ottenuto dall'and andrò a fare una media dei risultati delle due condizioni
+            # prima di salvare il valore finale ottenuto dall'and andrò a fare una media dei risultati delle due
+            # condizioni
             # perchè devono essere vere entrambe quindi trovo sensato fare una media sul risultato
-            # in un OR andrò infine a salvare il valore massimo che ho ottenuto dalle due condizioni iniziali considerando
+            # in un OR andrò infine a salvare il valore massimo che ho ottenuto dalle due condizioni iniziali
+            # considerando
             # che mi basta che una sola condizione sia verificata per far si che l'OR sia vero
             if "OR" in stringFirstList:
                 first = stringFirstList.split("OR", 1)
@@ -174,7 +202,8 @@ if __name__ == '__main__':
                     else:
                         resFirst.append(function.calculation_and(string, listSecondList))
                 totFirst.append(max(resFirst))
-            # quando nella prima stringa ho un AND separo le due condizioni e vado a controllare una per una chiamando la
+            # quando nella prima stringa ho un AND separo le due condizioni e vado a controllare
+            # una per una chiamando la
             # funzione che mi tornerà due valori, uno per ogni condizione. Infine faccio la media tra i due valori visto
             # che in un AND entrambe le condizioni devono essere verificate allo stesso momento
             elif "AND" in stringFirstList:
@@ -185,14 +214,17 @@ if __name__ == '__main__':
                     # Con questa chiamata avrò in partialList un valore per la prima stringa dell'and e un
                     # valore per la seconda stringa dell'and. Ora ne faccio la media e salvo il valore in finalL
                 totFirst.append(sum(partialFirst) / len(first))
-                # se la stringa è un'unica condizione posso chiamare subito la funzione che mi tornerà il valore massimo di
+                # se la stringa è un'unica condizione posso chiamare subito la funzione
+                # che mi tornerà il valore massimo di
             # similarità della stringa first con un blocco di query del target
             else:
                 totFirst.append(function.calculation_and(stringFirstList, listSecondList))
-        # nellla stringa totFirst vado a salvarmi a ogni iterazione del ciclo for il valore di similarità di una query della
+        # nellla stringa totFirst vado a salvarmi a ogni iterazione
+        # del ciclo for il valore di similarità di una query della
         # sorgente con la corrente lista di query del target quindi alla fine del ciclo for sulle query della sorgente
         # totFirst sarà una lista di tre elementi che andrò poi ad aggiungere come elemento in finalLL.
-        # Il primo elemento di finallLL corrisponde al paragone tra le query della sorgente e la prima lista di query del target
+        # Il primo elemento di finallLL corrisponde al paragone
+        # tra le query della sorgente e la prima lista di query del target
         print(totFirst)
         finalLL.append(totFirst)
     # con questo for vado a mettere in ordine i valori in finalLL così da poter poi selezionare la lista migliore
@@ -223,17 +255,17 @@ if __name__ == '__main__':
     print(valuesSorted)
     print(indice)
     # incremento della matrice solo con la clausola select
-    select1 = fin[0].split("FROM", 1)[0]
+    select1 = queries[0].split("FROM", 1)[0]
     select1 = select1.split("SELECT", 1)[1]
     select2 = pro[indice][0].split("FROM", 1)[0]
     select2 = select2.split("SELECT", 1)[1]
     if "," not in select1 and "," not in select2:
         print(select1)
         print(select2)
-        function.increase_new_matrix(select1, select2, 500)
+        matrix.increase_new_matrix(select1, select2, 500)
     else:
-        function.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
-        function.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
+        matrix.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
+        matrix.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
     """Incremento della matrice con i valori nelle where-clauses"""
     for stringFirstList in s1:
         stringFirstList = stringFirstList.replace(")", "")
@@ -255,17 +287,6 @@ if __name__ == '__main__':
     matrix = pd.read_csv("data/matrix.csv")
     print(matrix)
 
-
-
-
-
-
-
-
-
-
-
-
 """
     # fin = process("ClooneySource.csv", "TonyExample.csv", table_names)
     fin = process(source, "sources/jodie/JodieExample.csv", table_names)
@@ -286,5 +307,4 @@ if __name__ == '__main__':
     # pro = query_creator("sources/burt/BurtReynoldsTarget.csv", "sources/burt/BurtLine.csv")
     # pro = query_creator("sources/ridley/RidleyTarget.csv", "sources/ridley/RidleyLine.csv")
     # pro = query_creator("126Target.csv","126Line.csv")
-
 """

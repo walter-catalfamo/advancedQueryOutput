@@ -1,5 +1,5 @@
 from fuzzywuzzy import fuzz
-import pandas as pd
+from utils import matrix
 
 """questa funzione ritorna un valore che indica il rapporto di similarità di una stringa della sorgente
 con le 3 stringhe del target"""
@@ -16,39 +16,11 @@ con le 3 stringhe del target"""
 # una stringa con solo caratteri numerici e quindi avere un float.
 
 
-def increase_matrix_element(first, second, per, matrix):
-    # first = first.split("((",1)[1]
-    # second = second.split(" ((",1)[1]
-    first = first.replace(" ", "")
-    second = second.replace(" ", "")
-    i = 0
-    row = 0
-    col = 0
-    for i in range(len(matrix.columns)):
-        if matrix.columns[i] == second:
-            col = i
-    i = 0
-    for i in range(len(matrix.index)):
-        r = matrix.index[i].replace(" ", "")
-        if r == first:
-            row = i
-    if row != 0 and col != 0:
-        matrix.loc[matrix.index[row], matrix.columns[col]] += 1 * (per / 100)
-    matrix.to_csv("data/matrix.csv", index_label=False)
-
-
-def increase_matrix(first, second, per):
-    increase_matrix_element(first, second, per, pd.read_csv("data/matrix.csv"))
-
-
-def increase_new_matrix(first, second, per):
-    increase_matrix_element(first, second, per, pd.read_csv("data/initial_matrix.csv"))
-
-
 def calculation_and(first, second):
     tot = []
     if "!=" in first:
-        # se ho != nella stringa della sorgente devo verificare che anche nel target abbia != se no non ha senso il confronto
+        # se ho != nella stringa della sorgente devo
+        # verificare che anche nel target abbia != se no non ha senso il confronto
         # e così per tutti gli altri casi, non posso confrontare stringhe che cercando condizioni diverse
         s1split = first.split("!=", 1)[1]
         for piece in second:
@@ -363,13 +335,13 @@ def findAttribute(first, second):
                                 s2attribute = substring.split(" !=", 1)[0]
                                 substring = substring.split("!=", 1)[1]
                                 partial = fuzz.ratio(s1split, substring)
-                                increase_matrix(s1attribute, s2attribute, partial)
+                                matrix.increase_matrix(s1attribute, s2attribute, partial)
                     else:
                         if "!=" in string:
                             s2attribute = string.split(" !=", 1)[0]
                             string = string.split("!=", 1)[1]
                             partial = fuzz.ratio(s1split, string)
-                            increase_matrix(s1attribute, s2attribute, partial)
+                            matrix.increase_matrix(s1attribute, s2attribute, partial)
             elif "AND" in piece:
                 string = piece.split("AND", 1)
                 partial = []
@@ -378,13 +350,13 @@ def findAttribute(first, second):
                         s2attribute = substring.split(" !=", 1)[0]
                         substring = substring.split("!=", 1)[1]
                         partial = fuzz.ratio(s1split, substring)
-                        increase_matrix(s1attribute, s2attribute, partial)
+                        matrix.increase_matrix(s1attribute, s2attribute, partial)
             else:
                 if "!=" in piece:
                     s2attribute = string.split(" !=", 1)[0]
                     string = piece.split("!=", 1)[1]
                     partial = fuzz.ratio(s1split, string)
-                    increase_matrix(s1attribute, s2attribute, partial)
+                    matrix.increase_matrix(s1attribute, s2attribute, partial)
                     # se nella sorgente ho "=" potrei esser nel caso di solo uguale o anche di minore uguale e quindi ho due casi da gestire
     elif "=" in first:
         # caso in cui ho solo "=" gestisco con il confrontro tra stringhe usando fuzz.ratio
@@ -405,14 +377,14 @@ def findAttribute(first, second):
                                         s2attribute = substring.split(" =", 1)[0]
                                         substring = substring.split("=", 1)[1]
                                         partial = fuzz.ratio(s1split, substring)
-                                        increase_matrix(s1attribute, s2attribute, partial)
+                                        matrix.increase_matrix(s1attribute, s2attribute, partial)
                         else:
                             if "=" in string:
                                 if "!=" not in string and "<" not in string:
                                     s2attribute = string.split(" =", 1)[0]
                                     string = string.split("=", 1)[1]
                                     partial = fuzz.ratio(s1split, string)
-                                    increase_matrix(s1attribute, s2attribute, partial)
+                                    matrix.increase_matrix(s1attribute, s2attribute, partial)
                 elif "AND" in piece:
                     string = piece.split("AND", 1)
                     partial = []
@@ -422,14 +394,14 @@ def findAttribute(first, second):
                                 s2attribute = substring.split(" =", 1)[0]
                                 substring = substring.split("=", 1)[1]
                                 partial = fuzz.ratio(s1split, substring)
-                                increase_matrix(s1attribute, s2attribute, partial)
+                                matrix.increase_matrix(s1attribute, s2attribute, partial)
                 else:
                     if "=" in piece:
                         if "!=" not in piece and "<" not in piece:
                             s2attribute = piece.split(" =", 1)[0]
                             string = piece.split("=", 1)[1]
                             partial = fuzz.ratio(s1split, string)
-                            increase_matrix(s1attribute, s2attribute, partial)
+                            matrix.increase_matrix(s1attribute, s2attribute, partial)
                             # se nella sorgente ho <= allora vado a controllare che anche nel target abbia <= o > e confronto gli intervalli
         # questo perchè una volta che ho verificato di avere <= o > vuol dire che sto trattando caratteri numerici
         else:
@@ -455,7 +427,7 @@ def findAttribute(first, second):
                                         partial = 100
                                     else:
                                         partial = 0  # da decidere
-                                    increase_matrix(s1attribute, s2attribute, partial)
+                                    matrix.increase_matrix(s1attribute, s2attribute, partial)
                                 elif ">" in substring:
                                     s2attribute = substring.split(">", 1)[0]
                                     substring = substring.split(">", 1)[1]
@@ -466,7 +438,7 @@ def findAttribute(first, second):
                                         partial = 0  # niente intersezione
                                     else:
                                         partial = 100  # intersezione
-                                    increase_matrix(s1attribute, s2attribute, partial)
+                                    matrix.increase_matrix(s1attribute, s2attribute, partial)
                         else:
                             if "<" in string:
                                 s2attribute = string.split("<", 1)[0]
@@ -476,7 +448,7 @@ def findAttribute(first, second):
                                     partial = 100
                                 else:
                                     partial = 0
-                                increase_matrix(s1attribute, s2attribute, partial)
+                                matrix.increase_matrix(s1attribute, s2attribute, partial)
                             elif ">" in string:  # se nel target ho > invece di <=
                                 s2attribute = string.split(">", 1)[0]
                                 string = string.split(">", 1)[1]
@@ -485,7 +457,7 @@ def findAttribute(first, second):
                                     partial = 100
                                 else:
                                     partial = 100
-                                increase_matrix(s1attribute, s2attribute, partial)
+                                matrix.increase_matrix(s1attribute, s2attribute, partial)
                 elif "AND" in piece:
                     string = piece.split("AND", 1)
                     for substring in string:
@@ -497,7 +469,7 @@ def findAttribute(first, second):
                                 partial = 100
                             else:
                                 partial = 0
-                            increase_matrix(s1attribute, s2attribute, partial)
+                            matrix.increase_matrix(s1attribute, s2attribute, partial)
                         elif ">" in substring:
                             s2attribute = substring.split(">", 1)[0]
                             substring = substring.split(">", 1)[1]
@@ -506,7 +478,7 @@ def findAttribute(first, second):
                                 partial = 0  # in questo caso i due intervalli non hanno intersezioni
                             else:
                                 partial = 100
-                            increase_matrix(s1attribute, s2attribute, partial)
+                            matrix.increase_matrix(s1attribute, s2attribute, partial)
                 else:
                     if "<" in piece:
                         s2attribute = piece.split("<", 1)[0]
@@ -520,7 +492,7 @@ def findAttribute(first, second):
                         else:
                             # i due intervalli hanno un intersezione con valore del target minore
                             partial = 0
-                        increase_matrix(s1attribute, s2attribute, partial)
+                        matrix.increase_matrix(s1attribute, s2attribute, partial)
                     elif ">" in piece:  # se nel target ho > invece di <=
                         s2attribute = piece.split(" >", 1)[0]
                         string = piece.split(">", 1)[1]
@@ -529,7 +501,7 @@ def findAttribute(first, second):
                             partial = 0  # in questo caso i due intervalli non hanno intersezioni
                         else:
                             partial = 100
-                        increase_matrix(s1attribute, s2attribute, partial)
+                        matrix.increase_matrix(s1attribute, s2attribute, partial)
                         # in questo caso gli intervali hanno un intersezione, come valuto?
     # se nella stringa della sorgente ho ">" devo fare glis stessi ragionamenti che ho fatto con <= ma avrò condizioni
     # diverse a seconda di cosa mi si presenti nel target
@@ -558,7 +530,7 @@ def findAttribute(first, second):
                                 else:
                                     # i due intervalli non hanno intersezione
                                     partial = 0
-                                increase_matrix(s1attribute, s2attribute, partial)
+                                matrix.increase_matrix(s1attribute, s2attribute, partial)
                             elif ">" in substring:
                                 s2attribute = substring.split(" >", 1)[0]
                                 substring = substring.split(">", 1)[1]
@@ -569,7 +541,7 @@ def findAttribute(first, second):
                                 else:
                                     # i due intervalli hanno un intersezione
                                     partial = 100
-                                increase_matrix(s1attribute, s2attribute, partial)
+                                matrix.increase_matrix(s1attribute, s2attribute, partial)
                     else:
                         if "<" in string:
                             s2attribute = string.split(" <", 1)[0]
@@ -579,7 +551,7 @@ def findAttribute(first, second):
                                 partial = 100
                             else:
                                 partial = 0
-                            increase_matrix(s1attribute, s2attribute, partial)
+                            matrix.increase_matrix(s1attribute, s2attribute, partial)
                         elif ">" in string:  # se nel target ho > invece di <=
                             s2attribute = string.split(" >", 1)[0]
                             string = string.split(">", 1)[1]
@@ -588,7 +560,7 @@ def findAttribute(first, second):
                                 partial = 100
                             else:
                                 partial = 100
-                            increase_matrix(s1attribute, s2attribute, partial)
+                            matrix.increase_matrix(s1attribute, s2attribute, partial)
             elif "AND" in piece:
                 string = piece.split("AND", 1)
                 partial = []
@@ -601,7 +573,7 @@ def findAttribute(first, second):
                             partial = 100
                         else:
                             partial = 0
-                        increase_matrix(s1attribute, s2attribute, partial)
+                        matrix.increase_matrix(s1attribute, s2attribute, partial)
                     elif ">" in substring:
                         s2attribute = substring.split(" >", 1)[0]
                         substring = substring.split(">", 1)[1]
@@ -610,7 +582,7 @@ def findAttribute(first, second):
                             partial = 100
                         else:
                             partial = 100
-                        increase_matrix(s1attribute, s2attribute, partial)
+                        matrix.increase_matrix(s1attribute, s2attribute, partial)
             else:
                 if "<" in piece:
                     s2attribute = piece.split(" >", 1)[0]
@@ -620,7 +592,7 @@ def findAttribute(first, second):
                         partial = 100
                     else:
                         partial = 0
-                    increase_matrix(s1attribute, s2attribute, partial)
+                    matrix.increase_matrix(s1attribute, s2attribute, partial)
                 elif ">" in piece:
                     s2attribute = piece.split(" >", 1)[0]
                     string = piece.split(">", 1)[1]
@@ -629,4 +601,4 @@ def findAttribute(first, second):
                         partial = 100
                     else:
                         partial = 100
-                    increase_matrix(s1attribute, s2attribute, partial)
+                    matrix.increase_matrix(s1attribute, s2attribute, partial)

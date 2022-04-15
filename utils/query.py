@@ -33,28 +33,21 @@ def tree_to_where(joined_schema, tree):
         if tree == 1:
             return "", True
         return "FALSE", False
-
     # extract the attribute considered in the root node
     attribute_name = joined_schema[tree.attributeColumn]
-
     # build the logical formulae of the left and right subtree
     (lquery, lres) = tree_to_where(joined_schema, tree.left)
     (rquery, rres) = tree_to_where(joined_schema, tree.right)
-
     if lquery != "":  # if the left subtree is not a leaf , prepare to build attribute_name<=threshold AND ...
         lquery = " AND " + lquery
-
     if rquery != "":  # if the right subtree is not a leaf  , prepare to build attribute_name>threshold AND ...
         rquery = " AND " + rquery
-
     # if both left and right subtrees don't have any path to a positive leaf, return false as this subtree is useless
     if not lres and not rres:
         return "FALSE", False
-
     squery = "("
-
     if lres:  # if the left subtree is relevant ( has a path to a positive leaf) add it
-        if ('*' in attribute_name):
+        if '*' in attribute_name:
             index = attribute_name.find('*')
             copy = attribute_name[0:index]
             second = attribute_name[index + 1:]
@@ -63,14 +56,11 @@ def tree_to_where(joined_schema, tree):
         else:
             squery = squery + "(" + attribute_name + " <= " + str(tree.threshold)
             squery = squery + lquery + ")"
-
         # squery = ( (attribute_name <= threshold AND left_subtree_condition)
-
     if lres and rres:  # if both subtrees are relevant add an OR condition
         squery = squery + " OR "
-
     if rres:  # if the right subtree is relevant
-        if ('*' in attribute_name):
+        if '*' in attribute_name:
             index = attribute_name.find('*')
             copy = attribute_name[0:index]
             second = attribute_name[index + 1:]
@@ -79,10 +69,8 @@ def tree_to_where(joined_schema, tree):
         else:
             squery = squery + "(" + attribute_name + " > " + str(tree.threshold)
             squery = squery + rquery + ")"
-
         # squery +=  (attribute_name > threshold AND right_subtree_condition)
     squery = squery + ")"
-
     return squery, True
 
 
