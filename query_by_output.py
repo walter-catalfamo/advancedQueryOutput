@@ -1,7 +1,7 @@
-from utils import decision_tree
-from utils import query
-from utils import function
-from utils import matrix
+import decision_tree
+import query
+import function
+import matrix
 import pandas as pd
 import csv
 import itertools
@@ -261,22 +261,16 @@ if __name__ == '__main__':
 
 """
     # fin = process("ClooneySource.csv", "TonyExample.csv", table_names)
-    fin = process(source, "sources/jodie/JodieExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","2014example.csv", table_names)
     # fin = process("angeEthanSource2.csv","MusicExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","AngelinaExample.csv", table_names)
     # fin = process("angeEthanSource2.csv","137Angelina.csv", table_names)
-    # fin = process("sources/burt/BurtReynoldsSource.csv", "sources/burt/BurtExample.csv", table_names)
-    # fin = process("sources/ridley/RidleySource.csv", "sources/ridley/RidleyExample.csv", table_names)
     # fin = process ("126Source.csv","126Example.csv",table_names)
 
     # pro = query_creator("ClooneyTarget.csv","TonyLine.csv")
-    pro = query_creator("sources/jodie/JodieTarget.csv", "sources/jodie/JodieLine.csv")
     # pro = query_creator("angeEthanTarget.csv","2014line.csv")
     # pro = query_creator("angeEthanTarget.csv","MusicLine.csv")
     # pro = query_creator("angeEthanTarget.csv","AngelinaLine.csv") #ci impiega tanto, 270 secondi
     # pro = query_creator("angeEthanTarget.csv","137line.csv")
-    # pro = query_creator("sources/burt/BurtReynoldsTarget.csv", "sources/burt/BurtLine.csv")
-    # pro = query_creator("sources/ridley/RidleyTarget.csv", "sources/ridley/RidleyLine.csv")
     # pro = query_creator("126Target.csv","126Line.csv")
 """

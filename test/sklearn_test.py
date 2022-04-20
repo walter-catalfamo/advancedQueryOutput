@@ -1,5 +1,5 @@
 from sklearn import tree
-from utils import decision_tree
+import decision_tree
 
 
 def test_simple_tree():

@@ -1,5 +1,6 @@
-from utils import query
-from utils import decision_tree
+import query
+import decision_tree
+
 
 def test_from_segment():
     assert query.from_segment(["city", "region"]) == "FROM city JOIN region "

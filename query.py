@@ -1,4 +1,4 @@
-from utils import decision_tree
+import decision_tree
 
 
 def from_segment(tables):
