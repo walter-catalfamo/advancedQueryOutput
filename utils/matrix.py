@@ -1,5 +1,7 @@
 import pandas as pd
 
+write_enable = False
+
 
 def increase_matrix_element(first, second, per, matrix):
     # first = first.split("((",1)[1]
@@ -18,7 +20,8 @@ def increase_matrix_element(first, second, per, matrix):
             row = i
     if row != 0 and col != 0:
         matrix.loc[matrix.index[row], matrix.columns[col]] += 1 * (per / 100)
-    matrix.to_csv("data/matrix.csv", index_label=False)
+    if write_enable:
+        matrix.to_csv("data/matrix.csv", index_label=False)
 
 
 def increase_matrix(first, second, per):

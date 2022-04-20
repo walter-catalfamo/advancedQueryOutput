@@ -6,6 +6,8 @@ import pandas as pd
 import csv
 import itertools
 
+write_enable = False
+
 
 def load(file_name, output_file):
     """
@@ -20,7 +22,8 @@ def load(file_name, output_file):
     db = pd.get_dummies(db, prefix_sep='*')
     print(db)
     """I'm creating a csv file that will be read from the function after"""
-    db.to_csv(output_file, index=False)
+    if write_enable:
+        db.to_csv(output_file, index=False)
     with open(output_file, newline='', encoding="utf-8") as f:
         data = list(csv.reader(f))
     schema = [x.strip() for x in data[0]]
@@ -105,7 +108,8 @@ def query_creator(db_file, example_file):
     li = []
     for string in combination:
         ex = pd.DataFrame([find], columns=list(string))
-        ex.to_csv("data/col.csv", index=False)
+        if write_enable:
+            ex.to_csv("data/col.csv", index=False)
         s = process(db_file, "data/col.csv", table_names)
         li.append(s)
     return li
@@ -151,44 +155,35 @@ def select_line(num): # Line
     return "sources/" + example
 
 
+def filter_none(l):
+    return [x for x in l if x is not None]
+
+
 if __name__ == '__main__':
     table_names = ["imdb"]
     selection = 2
-    queries = process(select_source(selection), select_example(selection), table_names)
-    for string in queries:
+    source_queries = process(select_source(selection), select_example(selection), table_names)
+    for string in source_queries:
         print(string)
-    pro = query_creator(select_target(selection), select_line(selection))
-    print(pro)
-    pro = [x for x in pro if x is not None]  # filter list
+    target_queries = filter_none(query_creator(select_target(selection), select_line(selection)))
+    print(target_queries)
 
-    s1 = []
-    for i in range(len(queries)):
-        s1.append(queries[i].split("WHERE ", 1)[1])
-    s21 = []
-    for i in range(len(pro)):
-        s2 = []
-        for string in pro[i]:
-            s2.append(string.split("WHERE", 1)[1])
-        s21.append(s2)
-    finalLL = []
-    """Confronto delle query chiamando la funzione calculationAnd presente nel file function.py"""
-    for listSecondList in s21:
+    SPLITTED_QUERIES_SOURCE = []
+    for i in range(len(source_queries)):
+        SPLITTED_QUERIES_SOURCE.append(source_queries[i].split("WHERE ", 1)[1])
+    SPLITTED_QUERIES_TARGET = []
+    for i in range(len(target_queries)):
+        temp_string = []
+        for string in target_queries[i]:
+            temp_string.append(string.split("WHERE", 1)[1])
+        SPLITTED_QUERIES_TARGET.append(temp_string)
+
+    final_list = []
+
+    for listSecondList in SPLITTED_QUERIES_TARGET:
         totFirst = []
-        for stringFirstList in s1:
+        for stringFirstList in SPLITTED_QUERIES_SOURCE:
             stringFirstList = stringFirstList.replace(")", "")
-            # quando nella prima stringa ho un OR separo le due condizioni e controllo a loro volta che le condizioni
-            # non
-            # abbiano un AND o se sono già pronte per il confronto. Se compare anche un AND splitto ancora la stringa e
-            # per le due diverse condizioni chiamo la funzione che andrò a fare il confronto di una condizione
-            # (una stringa)
-            # con la lista di query del target (a seconda del ciclo for con la prima, la seconda o la terza)
-            # la funzione mi ritorna il valore massimo di similarità per quella stringa sulla rispettiva lista di query.
-            # prima di salvare il valore finale ottenuto dall'and andrò a fare una media dei risultati delle due
-            # condizioni
-            # perchè devono essere vere entrambe quindi trovo sensato fare una media sul risultato
-            # in un OR andrò infine a salvare il valore massimo che ho ottenuto dalle due condizioni iniziali
-            # considerando
-            # che mi basta che una sola condizione sia verificata per far si che l'OR sia vero
             if "OR" in stringFirstList:
                 first = stringFirstList.split("OR", 1)
                 resFirst = []
@@ -202,43 +197,23 @@ if __name__ == '__main__':
                     else:
                         resFirst.append(function.calculation_and(string, listSecondList))
                 totFirst.append(max(resFirst))
-            # quando nella prima stringa ho un AND separo le due condizioni e vado a controllare
-            # una per una chiamando la
-            # funzione che mi tornerà due valori, uno per ogni condizione. Infine faccio la media tra i due valori visto
-            # che in un AND entrambe le condizioni devono essere verificate allo stesso momento
             elif "AND" in stringFirstList:
                 first = stringFirstList.split("AND", 1)
                 partialFirst = []
                 for string in first:
                     partialFirst.append(function.calculation_and(string, listSecondList))
-                    # Con questa chiamata avrò in partialList un valore per la prima stringa dell'and e un
-                    # valore per la seconda stringa dell'and. Ora ne faccio la media e salvo il valore in finalL
                 totFirst.append(sum(partialFirst) / len(first))
-                # se la stringa è un'unica condizione posso chiamare subito la funzione
-                # che mi tornerà il valore massimo di
-            # similarità della stringa first con un blocco di query del target
             else:
                 totFirst.append(function.calculation_and(stringFirstList, listSecondList))
-        # nellla stringa totFirst vado a salvarmi a ogni iterazione
-        # del ciclo for il valore di similarità di una query della
-        # sorgente con la corrente lista di query del target quindi alla fine del ciclo for sulle query della sorgente
-        # totFirst sarà una lista di tre elementi che andrò poi ad aggiungere come elemento in finalLL.
-        # Il primo elemento di finallLL corrisponde al paragone
-        # tra le query della sorgente e la prima lista di query del target
         print(totFirst)
-        finalLL.append(totFirst)
-    # con questo for vado a mettere in ordine i valori in finalLL così da poter poi selezionare la lista migliore
-    print(finalLL)
-    valuesSorted = finalLL
+        final_list.append(totFirst)
+    print(final_list)
+    valuesSorted = final_list
     for string in valuesSorted:
         string.sort(reverse=True)
     massimo = valuesSorted[0][0]
     indice = 0
     i = 1
-    # con questo while controllo quale è la lista migliore andando a confrontare i vari valori di ogni lista
-    # avendo ordinato ogni lista so che il primo elemento è il valore massimo e quindi faccio un confronto tra i primi
-    # elementi, se sono uguali proseguo con il secondo elemento e in caso il terzo elemento. Salvo l'indice che mi
-    # indica la lista migliore
     while i < len(valuesSorted):
         val = valuesSorted[i][0]
         if val > massimo:
@@ -250,14 +225,12 @@ if __name__ == '__main__':
             elif valuesSorted[i][1] == valuesSorted[indice][1]:
                 if valuesSorted[i][2] > valuesSorted[indice][2]:
                     indice = i
-                # cosa faccio se tutti e tre i valori sono uguali (molto improbabile ma magari succede)
         i = i + 1
     print(valuesSorted)
     print(indice)
-    # incremento della matrice solo con la clausola select
-    select1 = queries[0].split("FROM", 1)[0]
+    select1 = source_queries[0].split("FROM", 1)[0]
     select1 = select1.split("SELECT", 1)[1]
-    select2 = pro[indice][0].split("FROM", 1)[0]
+    select2 = target_queries[indice][0].split("FROM", 1)[0]
     select2 = select2.split("SELECT", 1)[1]
     if "," not in select1 and "," not in select2:
         print(select1)
@@ -266,8 +239,7 @@ if __name__ == '__main__':
     else:
         matrix.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
         matrix.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
-    """Incremento della matrice con i valori nelle where-clauses"""
-    for stringFirstList in s1:
+    for stringFirstList in SPLITTED_QUERIES_SOURCE:
         stringFirstList = stringFirstList.replace(")", "")
         if "OR" in stringFirstList:
             first = stringFirstList.split("OR", 1)
@@ -275,15 +247,15 @@ if __name__ == '__main__':
                 if "AND" in string:
                     string = string.split("AND", 1)
                     for substring in string:
-                        function.findAttribute(substring, s21[indice])
+                        function.find_attribute(substring, SPLITTED_QUERIES_TARGET[indice])
                 else:
-                    function.findAttribute(string, s21[indice])
+                    function.find_attribute(string, SPLITTED_QUERIES_TARGET[indice])
         elif "AND" in stringFirstList:
             first = stringFirstList.split("AND", 1)
             for string in first:
-                function.findAttribute(string, s21[indice])
+                function.find_attribute(string, SPLITTED_QUERIES_TARGET[indice])
         else:
-            function.findAttribute(stringFirstList, s21[indice])
+            function.find_attribute(stringFirstList, SPLITTED_QUERIES_TARGET[indice])
     matrix = pd.read_csv("data/matrix.csv")
     print(matrix)
 

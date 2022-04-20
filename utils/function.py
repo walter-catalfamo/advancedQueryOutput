@@ -1,27 +1,10 @@
 from fuzzywuzzy import fuzz
 from utils import matrix
 
-"""questa funzione ritorna un valore che indica il rapporto di similarità di una stringa della sorgente
-con le 3 stringhe del target"""
-
-
-# in questa funzione a differenza dell'altra sto calcolando il risultato dell'and in un altro modo.
-# se prima confrontavo la stringa della sorgente con entrambe le condizioni dell'and e ne facevo una media, adesso
-# mi salvo solo il valore massimo perchè può essere che nella sorgente mi serva solo una condizione e quindi se nel
-# target mi si verifica quella condizione da una parte dell'and devo tenerla buona così.
-
-# rimuovo le parentesi dalle stringhe perchè potrebbero portare a risultati leggermente diversi durante il confronto.
-
-# inoltre quando devo considerare il confronto tra interi rimuovo anche gli spazi nella stringa per poter ottenere
-# una stringa con solo caratteri numerici e quindi avere un float.
-
 
 def calculation_and(first, second):
     tot = []
     if "!=" in first:
-        # se ho != nella stringa della sorgente devo
-        # verificare che anche nel target abbia != se no non ha senso il confronto
-        # e così per tutti gli altri casi, non posso confrontare stringhe che cercando condizioni diverse
         s1split = first.split("!=", 1)[1]
         for piece in second:
             piece = piece.replace(")", "")
@@ -63,9 +46,7 @@ def calculation_and(first, second):
                 else:
                     tot.append(0)
         return max(tot)
-    # se nella sorgente ho "=" potrei esser nel caso di solo uguale o anche di minore uguale e quindi ho due casi da gestire
     elif "=" in first:
-        # caso in cui ho solo "=" gestisco con il confrontro tra stringhe usando fuzz.ratio
         if "<" not in first:
             s1split = first.split("=", 1)[1]
             for piece in second:
@@ -120,8 +101,6 @@ def calculation_and(first, second):
                     else:
                         tot.append(0)
             return max(tot)
-        # se nella sorgente ho <= allora vado a controllare che anche nel target abbia <= o > e confronto gli intervalli
-        # questo perchè una volta che ho verificato di avere <= o > vuol dire che sto trattando caratteri numerici
         else:
             s1split = first.split("=", 1)[1]
             s1split = s1split.replace(" ", "")
@@ -138,8 +117,6 @@ def calculation_and(first, second):
                                 if "<" in substring:
                                     substring = substring.split("=", 1)[1]
                                     substring = substring.replace(" ", "")
-                                    # in questo caso ho entrambi gli intervalli che devono essere minori di un valore quindi i due intervalli si intersecano
-                                    # devo capire come valutare questa intersezione. Guardando il valore del target devo valutare il confrontro
                                     if float(s1split) <= float(substring):
                                         partial.append(100)
                                     else:
@@ -147,8 +124,6 @@ def calculation_and(first, second):
                                 elif ">" in substring:
                                     substring = substring.split(">", 1)[1]
                                     substring = substring.replace(" ", "")
-                                    # in questo caso la sorgente è minore di un certo valore mentre il target è maggiore quindi posso avere che i due intervalli
-                                    # non hanno intersezioni (quando il valore del target è maggiore) oppure che i due intervalli si intersichino
                                     if float(s1split) < float(substring):
                                         partial.append(0)  # niente intersezione
                                     else:
@@ -199,13 +174,9 @@ def calculation_and(first, second):
                     if "<" in piece:
                         string = piece.split("=", 1)[1]
                         string = string.replace(" ", "")
-                        # devo controllare che gli intervalli siano simili, considero che se il numero del
-                        # target è minore allora la somiglianza è 100?
                         if float(s1split) < float(string):
-                            # i due intervalli hanno un intersezione con valore della sorgente minore
                             tot.append(100)
                         else:
-                            # i due intervalli hanno un intersezione con valore del target minore
                             tot.append(100)
                     elif ">" in piece:  # se nel target ho > invece di <=
                         string = piece.split(">", 1)[1]
@@ -214,12 +185,9 @@ def calculation_and(first, second):
                             tot.append(0)  # in questo caso i due intervalli non hanno intersezioni
                         else:
                             tot.append(100)
-                            # in questo caso gli intervali hanno un intersezione, come valuto?
                     else:
                         tot.append(0)
             return max(tot)
-    # se nella stringa della sorgente ho ">" devo fare glis stessi ragionamenti che ho fatto con <= ma avrò condizioni
-    # diverse a seconda di cosa mi si presenti nel target
     else:
         s1split = first.split(">", 1)[1]
         s1split = s1split.replace(" ", "")
@@ -237,19 +205,15 @@ def calculation_and(first, second):
                                 substring = substring.split("=", 1)[1]
                                 substring = substring.replace(" ", "")
                                 if float(s1split) < float(substring):
-                                    # i due intervalli hanno un'intersezione
                                     partial.append(100)
                                 else:
-                                    # i due intervalli non hanno intersezione
                                     partial.append(0)
                             elif ">" in substring:
                                 substring = substring.split(">", 1)[1]
                                 substring = substring.replace(" ", "")
                                 if float(s1split) < float(substring):
-                                    # i due intervalli hanno un intersezione
                                     partial.append(100)
                                 else:
-                                    # i due intervalli hanno un intersezione
                                     partial.append(100)
                             else:
                                 partial.append(0)
@@ -312,10 +276,8 @@ def calculation_and(first, second):
                     tot.append(0)
         return max(tot)
 
-    # con questa funzione andrò ad ottenere gli attributi che combaciano tra primo e secondo
 
-
-def findAttribute(first, second):
+def find_attribute(first, second):
     first = first.replace("(", "")
     if "!=" in first:
         # se ho != nella stringa della sorgente devo verificare che anche nel target abbia != se no non ha senso il confronto

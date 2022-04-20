@@ -1,6 +1,8 @@
 QUERY_BY_OUTPUT
     main():
         process(source, example, imdb) -> return queries
+
+        
     process(db_file, example_file, table_names):
         load(db_file) -> (db_schema, db_table)
         load(example_file) -> (example_schema, example_table)
@@ -33,8 +35,10 @@ QUERY
         if the element is present but it is not the only one -> kinds[i] = 0
         if the element is present and it is the only one -> kinds[i] = 1
 
-    
-    
+    tree_to_query(input_schema, tables, joined_schema, tree):
+        return select_segment(input_schema) + from_segment(tables) + where_segment(joined_schema, tree)
+
+    select_segment(input_schema):
 
 
 DECISION_TREE
