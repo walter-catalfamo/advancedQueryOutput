@@ -9,36 +9,30 @@ def find_threshold(table, attribute_column):
     :param attribute_column: the column to use
     :return: pair threshold,gini
     """
-    # use sklearn's decision tree to find the best split value
     clf = tree.DecisionTreeClassifier()
     dataset = ([x[attribute_column]] for x in table)
     target = (x[0] for x in table)
     clf = clf.fit(list(dataset), list(target))
-    """threshold = clf.tree_.threshold[0].item()"""
-    threshold = 0.5
+    threshold = clf.tree_.threshold[0].item()
     gini = clf.tree_.impurity[0].item()
-    return gini
+    return threshold, gini
 
 
 def divide(table, attribute_column):
     """
     Given a decorated table and a column index to use, splits the table according to the optimal threshold
     :param table: the decorated table
-    :param attribute_column: the column to uyse
-    :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a table with the other rows, the
-            threshold and the gini value
+    :param attribute_column: the column to use
+    :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a
+    table with the other rows, the threshold and the gini value
     """
-
-    """threshold = clf.tree_.threshold[0].item()"""
-    threshold = 0.5
-
+    threshold, gini = find_threshold(table, attribute_column)
     left = [x for x in table if x[attribute_column] <= threshold]
     right = [x for x in table if x[attribute_column] > threshold]
-    # if not left or not right:  # if left or right are empty this split should be discarded
     if len(left) == 0 or len(right) == 0:
         gini = 999
     else:
-        gini = split_gini(left, right) * find_threshold(table, attribute_column)
+        gini = split_gini(left, right)
     return left, right, threshold, gini
 
 
@@ -58,10 +52,11 @@ def single_gini(s):
     :param s: set to use
     :return: gini value
     """
-    unass = count_of_class(s, 0)
+    uni = count_of_class(s, 0)
     pos = count_of_class(s, 1)
     neg = count_of_class(s, -1)
-    gini = 1.0 - ((unass * unass) + (pos * pos) + (neg * neg))
+    gini = 1.0 - ((uni * uni) + (pos * pos) + (neg * neg))
+    assert gini >= 0.0
     return gini
 
 
@@ -72,7 +67,10 @@ def split_gini(s1, s2):
     :param s2: second table
     :return: gini value
     """
-    return (len(s1) * single_gini(s1)) + (len(s2) * single_gini(s2)) / (len(s1) + len(s2))
+    gini12 = (len(s1) * single_gini(s1)) + (len(s2) * single_gini(s2))
+    gini12 = gini12 / (len(s1) + (len(s2)))
+    assert gini12 >= 0.0
+    return gini12
 
 
 def attribute_score(table):
@@ -82,7 +80,8 @@ def attribute_score(table):
     """
     for attr in range(1, len(table[0])):
         (left, right, threshold, gini) = divide(table, attr)
-        yield left, right, threshold, gini, attr
+        if gini < 999:
+            yield left, right, threshold, gini, attr
 
 
 def purity_kind(table):
@@ -105,17 +104,17 @@ def child_to_string(child, nesting):
     :param nesting: nesting level
     :return: a string representation of a child
     """
-    return child.recursiveStr(nesting) if isinstance(child, Tree) else ("\t" * nesting) + str(child)
+    return child.recursive_str(nesting) if isinstance(child, Tree) else ("\t" * nesting) + str(child)
 
 
 class Tree:
-    def __init__(self, left, right, threshold, attributeColumn):
+    def __init__(self, left, right, threshold, attribute_column):
         self.left = left
         self.right = right
         self.threshold = threshold
-        self.attributeColumn = attributeColumn
+        self.attributeColumn = attribute_column
 
-    def recursiveStr(self, nesting):
+    def recursive_str(self, nesting):
         """
         Builds a string representation of the tree
         :param nesting: nesting value
@@ -125,14 +124,12 @@ class Tree:
         /right_child
         """
         me = "attribute: " + str(self.attributeColumn) + " threshold " + str(self.threshold)
-
         left_str = child_to_string(self.left, nesting + 1)
         right_str = child_to_string(self.right, nesting + 1)
-
         return ("\t" * nesting) + me + "\n" + left_str + "\n" + right_str
 
     def __str__(self):
-        return self.recursiveStr(0)
+        return self.recursive_str(0)
 
 
 def update_free(table, new_value):
@@ -152,15 +149,14 @@ def make_tree(table):
     :param table: table to be analyzed
     :return: the Tree built
     """
-    if not table:  # if table is empty
+    if not table:
         return -1
-    kind = purity_kind(table)  # find out if the table is pure, if it is then this leaf node is ok, return
+    kind = purity_kind(table)
     if kind != 0:
         yield kind
         return
     gen = attribute_score(table)
-    """In questo modo sto creando una lista per ogni variabile e ogni elemento della lista corrisponde ad un albero 
-    di un attributo specifico."""
+
     left = []
     right = []
     threshold = []
@@ -172,23 +168,19 @@ def make_tree(table):
         threshold.append(i[2])
         gini.append(i[3])
         attribute_column.append(i[4])
-    # case C1 puts as positive all free tuples
-    for i in range(len(left)):
-        update_free(left[i], 1)
-        update_free(right[i], 1)
-    # build left and right subtrees
-    """"seleziono solo i 3 alberi con il gini migliore su tutti gli split possibili e continuo a dividere l'albero solo 
-    da questi."""
-    num = nsmallest(3, gini)  # ["0,0","999"]
+    case = 1
+    if case == 1:
+        for i in range(len(left)):
+            update_free(left[i], 1)
+            update_free(right[i], 1)
+    num = nsmallest(3, gini)
     index = []
     for i in range(len(num)):
-        #   if num[i] != 999:
         index.append(gini.index(num[i]))
         gini[gini.index(
-            num[i])] = 'a'  # nel caso avessi duplicati cambio il gini appena considerato per ottere il giusto indice
+            num[i])] = 'a'
     for i in index:
         if left[i] != [] and right[i] != []:
-            # print(left[i])
             left[i] = list(make_tree(left[i]))[0]
             right[i] = list(make_tree(right[i]))[0]
     for i in index:
