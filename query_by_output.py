@@ -171,19 +171,19 @@ if __name__ == '__main__':
                         string = string.split("AND", 1)
                         partialFirst = []
                         for substring in string:
-                            partialFirst.append(function.calculation_and(substring, listSecondList))
+                            partialFirst.append(function.calculation_and_lvl1(substring, listSecondList))
                         resFirst.append(sum(partialFirst) / len(string))
                     else:
-                        resFirst.append(function.calculation_and(string, listSecondList))
+                        resFirst.append(function.calculation_and_lvl1(string, listSecondList))
                 totFirst.append(max(resFirst))
             elif "AND" in stringFirstList:
                 first = stringFirstList.split("AND", 1)
                 partialFirst = []
                 for string in first:
-                    partialFirst.append(function.calculation_and(string, listSecondList))
+                    partialFirst.append(function.calculation_and_lvl1(string, listSecondList))
                 totFirst.append(sum(partialFirst) / len(first))
             else:
-                totFirst.append(function.calculation_and(stringFirstList, listSecondList))
+                totFirst.append(function.calculation_and_lvl1(stringFirstList, listSecondList))
         print(totFirst)
         finalLL.append(totFirst)
     print(finalLL)

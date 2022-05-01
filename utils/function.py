@@ -11,45 +11,12 @@ def f1a(substring, s1split):
         return 0
 
 
-def f1(string, s1split):
-    string = string.split("AND", 1)
-    partial = []
-    for substring in string:
-        partial.append(f1a(substring, s1split))
-    return partial
-
-
 def f2a(substring, s1split):
     if "=" in substring and "!=" not in substring and "<" not in substring:
         substring = substring.split("=", 1)[1]
         return fuzz.ratio(s1split, substring)
     else:
         return 0
-
-
-def f2(string, s1split):
-    string = string.split("AND", 1)
-    partial = []
-    for substring in string:
-        partial.append(f2a(substring, s1split))
-    return partial
-
-
-def ff1a(substring, s1split, switch):
-    if switch == 1:
-        return f1a(substring, s1split)
-    elif switch == 2:
-        return f2a(substring, s1split)
-    elif switch == 3:
-        return f3(substring, s1split)
-
-
-def ff1(string, s1split, switch):
-    string = string.split("AND", 1)
-    partial = []
-    for substring in string:
-        partial.append(ff1a(substring, s1split, switch))
-    return partial
 
 
 def f3a(string, s1split):
@@ -71,76 +38,60 @@ def f3a(string, s1split):
         return 0
 
 
-def f3(piece, s1split):
-    res = []
-    s_or = piece.split("OR", 1)
-    for string in s_or:
-        if "AND" in string:
-            string = string.split("AND", 1)
-            partial = []
-            for substring in string:
-                partial.append(f3a(substring, s1split))
-            res.append(max(partial))
-        else:
-            res.append(f3a(string, s1split))
-    return max(res)
+def calculation_and_lvl3(loop_switch, query_switch, string, s1split):
+    if loop_switch:
+        string = string.split("AND", 1)
+        res = []
+        for substring in string:
+            if query_switch == 1:
+                res.append(f1a(substring, s1split))
+            elif query_switch == 2:
+                res.append(f2a(substring, s1split))
+            elif query_switch == 3:
+                res.append(f3a(substring, s1split))
+        return max(res)
+    else:
+        if query_switch == 1:
+            return f1a(string, s1split)
+        elif query_switch == 2:
+            return f2a(string, s1split)
+        elif query_switch == 3:
+            return f3a(string, s1split)
 
 
-def calculation_and(first, second):
+def calculation_and_lvl2(second, query_switch, s1split):
     tot = []
+    for piece in second:
+        piece = piece.replace(")", "")
+        if "OR" in piece:
+            res = []
+            s_or = piece.split("OR", 1)
+            for string in s_or:
+                if "AND" in string:
+                    res.append(calculation_and_lvl3(True, query_switch, string, s1split))
+                else:
+                    res.append(calculation_and_lvl3(False, query_switch, string, s1split))
+            tot.append(max(res))
+        elif "AND" in piece:
+            tot.append(calculation_and_lvl3(True, query_switch, piece, s1split))
+        else:
+            tot.append(calculation_and_lvl3(False, query_switch, piece, s1split))
+    return tot
+
+
+def calculation_and_lvl1(first, second):
     if "!=" in first:
         s1split = first.split("!=", 1)[1]
-        for piece in second:
-            piece = piece.replace(")", "")
-            if "OR" in piece:
-                res = []
-                s_or = piece.split("OR", 1)
-                for string in s_or:
-                    if "AND" in string:
-                        res.append(max(f1(string, s1split)))
-                    else:
-                        res.append(f1a(string, s1split))
-                tot.append(max(res))
-            elif "AND" in piece:
-                tot.append(max(f1(piece, s1split)))
-            else:
-                tot.append(f1a(piece, s1split))
+        switch = 1
     elif "=" in first and "<" not in first:
         s1split = first.split("=", 1)[1]
-        for piece in second:
-            piece = piece.replace(")", "")
-            if "OR" in piece:
-                res = []
-                s_or = piece.split("OR", 1)
-                for string in s_or:
-                    if "AND" in string:
-                        res.append(max(f2(string, s1split)))
-                    else:
-                        res.append(f2a(string, s1split))
-                tot.append(max(res))
-            elif "AND" in piece:
-                tot.append(max(f2(piece, s1split)))
-            else:
-                tot.append(f2a(piece, s1split))
+        switch = 2
     else:
         s1split = first.split(">", 1)[1]
         s1split = s1split.replace(" ", "")
-        for piece in second:
-            piece = piece.replace(")", "")
-            if "OR" in piece:
-                tot.append(f3(piece, s1split))
-            elif "AND" in piece:
-                string = piece.split("AND", 1)
-                partial = []
-                for substring in string:
-                    partial.append(f3a(substring, s1split))
-                tot.append(max(partial))
-            else:
-                tot.append(f3a(piece, s1split))
+        switch = 3
+    tot = calculation_and_lvl2(second, switch, s1split)
     return max(tot)
-
-
-""""""""""""""""""
 
 
 def f6(string, s1split, s1attribute, matrix):
@@ -162,12 +113,11 @@ def f7(string, s1split, s1attribute, matrix):
 
 
 def f8(string, s1split, s1attribute, matrix):
-    if "=" in string:
-        if "!=" not in string and "<" not in string:
-            s2attribute = string.split(" =", 1)[0]
-            string = string.split("=", 1)[1]
-            partial = fuzz.ratio(s1split, string)
-            matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
+    if "=" in string and "!=" not in string and "<" not in string:
+        s2attribute = string.split(" =", 1)[0]
+        string = string.split("=", 1)[1]
+        partial = fuzz.ratio(s1split, string)
+        matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
     return matrix
 
 
