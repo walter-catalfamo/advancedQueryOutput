@@ -1,74 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e9c909e4-f0b7-4009-856d-0cbe77a2a638" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/right_matrix.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/QueryByOutput-master.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/advancedQueryOutput.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/advancedQueryOutput.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/cataw.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/(Synthesis Lectures on Data Management) Xin Luna Dong, Divesh Srivastava-Big Data Integration-Morgan &amp; Claypool (2015).pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/Generic_Schema_Matching_Ten_Years_Later20160125-26053-qwv6cw-with-cover-page-v2.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/Schema mapping Bonifati.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/Schema mapping Jagadish.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/Schema_Alignment_QRE.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/Schema_Mapping_QRE.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Papers/Tran2014_Article_QueryReverseEngineering-3.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/big.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/big.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/col.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/col.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/enc.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/enc.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/matrix.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/matrix.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentation/README Stucchi.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentation/README Walter.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentation/TesiOk.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/function.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/matrix.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/query.py" beforeDir="false" />
+    <list default="true" id="e9c909e4-f0b7-4009-856d-0cbe77a2a638" name="Changes" comment="a">
+      <change afterPath="$PROJECT_DIR$/utils/matrix.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/query_by_output.py" beforeDir="false" afterPath="$PROJECT_DIR$/query_by_output.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/burt/BurtExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/burt/BurtLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/burt/BurtReynoldsSource.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/burt/BurtReynoldsTarget.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/jodie/JodieExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/jodie/JodieLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/jodie/JodieTarget.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/jodie/jodieSource.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/ridley/RidleyExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/ridley/RidleyLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/ridley/RidleySource.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/ridley/RidleyTarget.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/119TonyExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/119TonyLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/126Example.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/126Line.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/126Source.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/126Target.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/137Angelina.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/137Line.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/2014example.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/2014line.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/AngelinaExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/AngelinaLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/ClooneySource.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/ClooneyTarget.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/JodieExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/JodieLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/JodieTarget.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/MusicLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/TonyExample.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/TonyLine.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/angeEthanTarget.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/jodieSource.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp/sources/reducedSource.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/query_test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/sklearn_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/function.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/function.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +26,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="289OibtZk1W2I7IkvDt7YcwzdRZ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -175,8 +115,18 @@
       <option name="presentableId" value="Default" />
       <updated>1650625463016</updated>
       <workItem from="1650625465039" duration="4696000" />
-      <workItem from="1651332951332" duration="915000" />
+      <workItem from="1651332951332" duration="2078000" />
+      <workItem from="1651395761281" duration="8062000" />
+      <workItem from="1651404801392" duration="2813000" />
     </task>
+    <task id="LOCAL-00001" summary="a">
+      <created>1651333931761</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1651333931761</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,24 +143,23 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="a" />
+    <option name="LAST_COMMIT_MESSAGE" value="a" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/function.py</url>
-          <line>36</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/function.py</url>
-          <line>37</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/query_by_output.py</url>
+          <line>142</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/advancedQueryOutput$query_by_output.coverage" NAME="query_by_output Coverage Results" MODIFIED="1651333805643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/advancedQueryOutput$query_by_output.coverage" NAME="query_by_output Coverage Results" MODIFIED="1651407618194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/advancedQueryOutput$removeComments.coverage" NAME="removeComments Coverage Results" MODIFIED="1650627906963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

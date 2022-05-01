@@ -1,3 +1,4 @@
+import utils.matrix
 from utils import decision_tree, function
 from utils import query
 import pandas as pd
@@ -138,14 +139,14 @@ def filter_none(my_list):
 
 
 if __name__ == '__main__':
+    matrix = pd.read_csv("data/initial_matrix.csv")
     table_names = ["imdb"]
     source_queries = process("data/jodieSource.csv", "data/JodieExample.csv", table_names)
     for string in source_queries:
         print(string)
     target_queries = query_creator("data/JodieTarget.csv", "data/JodieLine.csv")
     print(target_queries)
-    target_queries = filter(None.__ne__, target_queries)
-    target_queries = list(target_queries)
+    target_queries = list(filter(None.__ne__, target_queries))
     s1 = []
     for i in range(len(source_queries)):
         s1.append(source_queries[i].split("WHERE ", 1)[1])
@@ -213,10 +214,10 @@ if __name__ == '__main__':
     if "," not in select1 and "," not in select2:
         print(select1)
         print(select2)
-        function.increase_matrix(select1, select2, 500)
+        matrix = utils.matrix.increase_matrix(select1, select2, 500, matrix)
     else:
-        function.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500)
-        function.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500)
+        matrix = utils.matrix.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500, matrix)
+        matrix = utils.matrix.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500, matrix)
     for stringFirstList in s1:
         stringFirstList = stringFirstList.replace(")", "")
         if "OR" in stringFirstList:
@@ -225,14 +226,14 @@ if __name__ == '__main__':
                 if "AND" in string:
                     string = string.split("AND", 1)
                     for substring in string:
-                        function.find_attribute(substring, s21[indice])
+                        matrix = function.find_attribute(substring, s21[indice], matrix)
                 else:
-                    function.find_attribute(string, s21[indice])
+                    matrix = function.find_attribute(string, s21[indice], matrix)
         elif "AND" in stringFirstList:
             first = stringFirstList.split("AND", 1)
             for string in first:
-                function.find_attribute(string, s21[indice])
+                matrix = function.find_attribute(string, s21[indice], matrix)
         else:
-            function.find_attribute(stringFirstList, s21[indice])
-    matrix = pd.read_csv("data/matrix.csv")
+            matrix = function.find_attribute(stringFirstList, s21[indice], matrix)
+    # matrix.to_csv("data/matrix.csv", index_label=False)
     print(matrix)
