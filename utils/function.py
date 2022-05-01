@@ -3,7 +3,7 @@ from fuzzywuzzy import fuzz
 from utils.matrix import increase_matrix
 
 
-def f1a(substring, s1split):
+def calculation_and_f1(substring, s1split):
     if "!=" in substring:
         substring = substring.split("!=", 1)[1]
         return fuzz.ratio(s1split, substring)
@@ -11,31 +11,39 @@ def f1a(substring, s1split):
         return 0
 
 
-def f2a(substring, s1split):
-    if "=" in substring and "!=" not in substring and "<" not in substring:
+def calculation_and_f2(substring, s1split):
+    if "=" in substring:  # if "=" in substring and "!=" not in substring and "<" not in substring:
         substring = substring.split("=", 1)[1]
         return fuzz.ratio(s1split, substring)
     else:
         return 0
 
 
-def f3a(string, s1split):
-    if "<" in string:
-        string = string.split("=", 1)[1]
-        string = string.replace(" ", "")
-        if float(s1split) < float(string):
-            return 100
-        else:
-            return 0  # it was 100 before
-    elif ">" in string:
-        string = string.split(">", 1)[1]
-        string = string.replace(" ", "")
-        if float(s1split) < float(string):
-            return 0
-        else:
-            return 100
+def calculation_and_f3(string, s1split):
+    string = string.split(">", 1)[1]
+    if float(s1split) < float(string):
+        return 0
+    else:
+        return 100
+
+
+def calculation_and_f4(string, s1split):
+    string = string.split("<", 1)[1]
+    if float(s1split) < float(string):
+        return 100
     else:
         return 0
+
+
+def calculation_and_lvl4(query_switch, string, s1split):
+    if query_switch == 1:
+        return calculation_and_f1(string, s1split)
+    elif query_switch == 2:
+        return calculation_and_f2(string, s1split)
+    elif query_switch == 3:
+        return calculation_and_f3(string, s1split)
+    elif query_switch == 4:
+        return calculation_and_f4(string, s1split)
 
 
 def calculation_and_lvl3(loop_switch, query_switch, string, s1split):
@@ -43,20 +51,10 @@ def calculation_and_lvl3(loop_switch, query_switch, string, s1split):
         string = string.split("AND", 1)
         res = []
         for substring in string:
-            if query_switch == 1:
-                res.append(f1a(substring, s1split))
-            elif query_switch == 2:
-                res.append(f2a(substring, s1split))
-            elif query_switch == 3:
-                res.append(f3a(substring, s1split))
+            res.append(calculation_and_lvl4(query_switch, substring, s1split))
         return max(res)
     else:
-        if query_switch == 1:
-            return f1a(string, s1split)
-        elif query_switch == 2:
-            return f2a(string, s1split)
-        elif query_switch == 3:
-            return f3a(string, s1split)
+        return calculation_and_lvl4(query_switch, string, s1split)
 
 
 def calculation_and_lvl2(second, query_switch, s1split):
@@ -83,36 +81,48 @@ def calculation_and_lvl1(first, second):
     if "!=" in first:
         s1split = first.split("!=", 1)[1]
         switch = 1
-    elif "=" in first and "<" not in first:
+    elif "=" in first:  # elif "=" in first and "<" not in first:
         s1split = first.split("=", 1)[1]
         switch = 2
-    else:
+    elif ">" in first:
         s1split = first.split(">", 1)[1]
         s1split = s1split.replace(" ", "")
         switch = 3
+    elif "<" in first:
+        s1split = first.split("<>>", 1)[1]
+        s1split = s1split.replace(" ", "")
+        switch = 4
+    else:
+        return 0
     tot = calculation_and_lvl2(second, switch, s1split)
     return max(tot)
 
 
-def f6(string, s1split, s1attribute, matrix):
-    string = string.split("AND", 1)
-    for substring in string:
-        if "!=" in substring:
-            s2attribute = substring.split(" !=", 1)[0]
-            substring = substring.split("!=", 1)[1]
-            partial = fuzz.ratio(s1split, substring)
-            matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
+
+def f1a(string, s1split, s1attribute, matrix):
+    if "!=" in string:
+        s2attribute = string.split(" !=", 1)[0]
+        string = string.split("!=", 1)[1]
+        partial = fuzz.ratio(s1split, string)
+        matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
     return matrix
 
 
-def f7(string, s1split, s1attribute, matrix):
+def f1(string, s1split, s1attribute, matrix):
     string = string.split("AND", 1)
     for substring in string:
-        matrix = f8(substring, s1split, s1attribute, matrix)
+        matrix = f1a(substring, s1split, s1attribute, matrix)
     return matrix
 
 
-def f8(string, s1split, s1attribute, matrix):
+def f77(string, s1split, s1attribute, matrix):
+    string = string.split("AND", 1)
+    for substring in string:
+        matrix = f77a(substring, s1split, s1attribute, matrix)
+    return matrix
+
+
+def f77a(string, s1split, s1attribute, matrix):
     if "=" in string and "!=" not in string and "<" not in string:
         s2attribute = string.split(" =", 1)[0]
         string = string.split("=", 1)[1]
@@ -191,21 +201,13 @@ def find_attribute(first, second, matrix):
                 s_or = piece.split("OR", 1)
                 for string in s_or:
                     if "AND" in string:
-                        matrix = f6(string, s1split, s1attribute, matrix)
+                        matrix = f1(string, s1split, s1attribute, matrix)
                     else:
-                        if "!=" in string:
-                            s2attribute = string.split(" !=", 1)[0]
-                            string = string.split("!=", 1)[1]
-                            partial = fuzz.ratio(s1split, string)
-                            matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
+                        matrix = f1a(string, s1split, s1attribute, matrix)
             elif "AND" in piece:
-                matrix = f6(piece, s1split, s1attribute, matrix)
+                matrix = f1(piece, s1split, s1attribute, matrix)
             else:
-                if "!=" in piece:
-                    s2attribute = piece.split(" !=", 1)[0]
-                    string = piece.split("!=", 1)[1]
-                    partial = fuzz.ratio(s1split, string)
-                    matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
+                matrix = f1a(piece, s1split, s1attribute, matrix)
     elif "=" in first:
         if "<" not in first:
             s1split = first.split("=", 1)[1]
@@ -217,13 +219,13 @@ def find_attribute(first, second, matrix):
                     s_or = piece.split("OR", 1)
                     for string in s_or:
                         if "AND" in string:
-                            matrix = f7(string, s1split, s1attribute, matrix)
+                            matrix = f77(string, s1split, s1attribute, matrix)
                         else:
-                            matrix = f8(string, s1split, s1attribute, matrix)
+                            matrix = f77a(string, s1split, s1attribute, matrix)
                 elif "AND" in piece:
-                    matrix = f7(piece, s1split, s1attribute, matrix)
+                    matrix = f77(piece, s1split, s1attribute, matrix)
                 else:
-                    matrix = f8(piece, s1split, s1attribute, matrix)
+                    matrix = f77a(piece, s1split, s1attribute, matrix)
         else:
             s1split = first.split("=", 1)[1]
             s1split = s1split.replace(" ", "")
@@ -258,7 +260,7 @@ def find_attribute(first, second, matrix):
                                 if float(s1split) < float(string):
                                     partial = 100
                                 else:
-                                    partial = 100
+                                    partial = 0
                                 matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
                 elif "AND" in piece:
                     string = piece.split("AND", 1)
