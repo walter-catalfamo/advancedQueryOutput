@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9c909e4-f0b7-4009-856d-0cbe77a2a638" name="Changes" comment="a">
-      <change afterPath="$PROJECT_DIR$/utils/find_attribute_backup" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/query_by_output.py" beforeDir="false" afterPath="$PROJECT_DIR$/query_by_output.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/decision_tree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/function.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/matrix.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/similarity_matrix.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,8 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "C:/Users/cataw/PycharmProjects/advancedQueryOutput",
-    "nodejs_package_manager_path": "npm"
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -119,7 +120,7 @@
       <workItem from="1651332951332" duration="2078000" />
       <workItem from="1651395761281" duration="8062000" />
       <workItem from="1651404801392" duration="10799000" />
-      <workItem from="1651477756932" duration="7259000" />
+      <workItem from="1651477756932" duration="12508000" />
     </task>
     <task id="LOCAL-00001" summary="a">
       <created>1651333931761</created>
@@ -149,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651413051911</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="a">
+      <created>1651485732054</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651485732054</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,7 +179,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="a" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/advancedQueryOutput$query_by_output.coverage" NAME="query_by_output Coverage Results" MODIFIED="1651485685766" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/advancedQueryOutput$query_by_output.coverage" NAME="query_by_output Coverage Results" MODIFIED="1651496742246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/advancedQueryOutput$removeComments.coverage" NAME="removeComments Coverage Results" MODIFIED="1650627906963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
