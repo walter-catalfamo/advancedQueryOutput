@@ -1,6 +1,4 @@
-import utils.matrix
-from utils import decision_tree, function
-from utils import query
+from utils import decision_tree, function, similarity_matrix, query
 import pandas as pd
 import csv
 import itertools
@@ -93,147 +91,156 @@ def query_creator(db_file, example_file):
 def select_source(num):
     example = ""
     if num == 1:
-        example = "jodie/jodieSource.csv"
+        example = "data/jodieSource.csv"
     elif num == 2:
         example = "burt/BurtReynoldsSource.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
-    return "sources/" + example
+    return example
 
 
 def select_example(num):
     example = ""
     if num == 1:
-        example = "jodie/JodieExample.csv"
+        example = "data/JodieExample.csv"
     elif num == 2:
         example = "burt/BurtExample.csv"
     elif num == 3:
         example = "ridley/RidleyExample.csv"
-    return "sources/" + example
+    return example
 
 
 def select_target(num):  # Target
     example = ""
     if num == 1:
-        example = "jodie/JodieTarget.csv"
+        example = "data/JodieTarget.csv"
     elif num == 2:
         example = "burt/BurtReynoldsTarget.csv"
     elif num == 3:
         example = "ridley/RidleyTarget.csv"
-    return "sources/" + example
+    return example
 
 
 def select_line(num):  # Line
     example = ""
     if num == 1:
-        example = "jodie/JodieLine.csv"
+        example = "data/JodieLine.csv"
     elif num == 2:
         example = "burt/BurtLine.csv"
     elif num == 3:
         example = "ridley/RidleyLine.csv"
-    return "sources/" + example
+    return example
 
 
 def filter_none(my_list):
     return [x for x in my_list if x is not None]
 
 
-if __name__ == '__main__':
-    matrix = pd.read_csv("data/initial_matrix.csv")
-    table_names = ["imdb"]
-    source_queries = process("data/jodieSource.csv", "data/JodieExample.csv", table_names)
-    for string in source_queries:
-        print(string)
-    target_queries = query_creator("data/JodieTarget.csv", "data/JodieLine.csv")
-    print(target_queries)
-    target_queries = list(filter(None.__ne__, target_queries))
-    s1 = []
-    for i in range(len(source_queries)):
-        s1.append(source_queries[i].split("WHERE ", 1)[1])
-    s21 = []
-    for i in range(len(target_queries)):
-        s2 = []
-        for string in target_queries[i]:
-            s2.append(string.split("WHERE", 1)[1])
-        s21.append(s2)
-    finalLL = []
+def split_queries_source(sq):
+    split_where_attributes_source = []
+    for num_query in range(len(sq)):
+        split_where_attributes_source.append(sq[num_query].split("WHERE ", 1)[1])
+    return split_where_attributes_source
 
-    """Confronto delle query chiamando la funzione calculationAnd presente nel file function.py"""
-    for listSecondList in s21:
-        totFirst = []
-        for stringFirstList in s1:
-            stringFirstList = stringFirstList.replace(")", "")
-            if "OR" in stringFirstList:
-                first = stringFirstList.split("OR", 1)
-                resFirst = []
-                for string in first:
+
+def split_queries_target(tq):
+    split_where_attributes_target = []
+    for i in range(len(tq)):
+        temp_string = []
+        for string in tq[i]:
+            temp_string.append(string.split("WHERE", 1)[1])
+        split_where_attributes_target.append(temp_string)
+    return split_where_attributes_target
+
+
+def match(tq, sq):
+    qv = []
+    for attribute_found_target in tq:
+        match_points = []
+        for attribute_found_source in sq:
+            attribute_found_source = attribute_found_source.replace(")", "")
+            if "OR" in attribute_found_source:
+                first_part = attribute_found_source.split("OR", 1)
+                point = []
+                for string in first_part:
                     if "AND" in string:
                         string = string.split("AND", 1)
-                        partialFirst = []
+                        partial_point = []
                         for substring in string:
-                            partialFirst.append(function.calculation_and_lvl1(substring, listSecondList))
-                        resFirst.append(sum(partialFirst) / len(string))
+                            partial_point.append(function.calculation_and_lvl1(substring, attribute_found_target))
+                        point.append(sum(partial_point) / len(string))
                     else:
-                        resFirst.append(function.calculation_and_lvl1(string, listSecondList))
-                totFirst.append(max(resFirst))
-            elif "AND" in stringFirstList:
-                first = stringFirstList.split("AND", 1)
-                partialFirst = []
-                for string in first:
-                    partialFirst.append(function.calculation_and_lvl1(string, listSecondList))
-                totFirst.append(sum(partialFirst) / len(first))
+                        point.append(function.calculation_and_lvl1(string, attribute_found_target))
+                match_points.append(max(point))
+            elif "AND" in attribute_found_source:
+                first_part = attribute_found_source.split("AND", 1)
+                partial_point = []
+                for string in first_part:
+                    partial_point.append(function.calculation_and_lvl1(string, attribute_found_target))
+                match_points.append(sum(partial_point) / len(first_part))
             else:
-                totFirst.append(function.calculation_and_lvl1(stringFirstList, listSecondList))
-        print(totFirst)
-        finalLL.append(totFirst)
-    print(finalLL)
-    valuesSorted = finalLL
-    for string in valuesSorted:
-        string.sort(reverse=True)
-    massimo = valuesSorted[0][0]
-    indice = 0
-    i = 1
-    while i < len(valuesSorted):
-        val = valuesSorted[i][0]
-        if val > massimo:
-            massimo = val
-            indice = i
-        elif val == massimo:
-            if valuesSorted[i][1] > valuesSorted[indice][1]:
-                indice = i
-            elif valuesSorted[i][1] == valuesSorted[indice][1]:
-                if valuesSorted[i][2] > valuesSorted[indice][2]:
-                    indice = i
-        i = i + 1
-    print(valuesSorted)
-    print(indice)
-    select1 = source_queries[0].split("FROM", 1)[0]
-    select1 = select1.split("SELECT", 1)[1]
-    select2 = target_queries[indice][0].split("FROM", 1)[0]
-    select2 = select2.split("SELECT", 1)[1]
-    if "," not in select1 and "," not in select2:
-        print(select1)
-        print(select2)
-        matrix = utils.matrix.increase_matrix(select1, select2, 500, matrix)
+                match_points.append(function.calculation_and_lvl1(attribute_found_source, attribute_found_target))
+        print(match_points)
+        qv.append(match_points)
+    return qv
+
+
+def build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
+                            split_target_queries, indice):
+    m = pd.read_csv("data/initial_matrix.csv")
+    if "," not in select_source_attribute and "," not in select_target_attribute:
+        m = similarity_matrix.increase_matrix(select_source_attribute, select_target_attribute, 500, m)
     else:
-        matrix = utils.matrix.increase_matrix(select1.split(",", 1)[0], select2.split(",", 1)[0], 500, matrix)
-        matrix = utils.matrix.increase_matrix(select1.split(",", 1)[1], select2.split(",", 1)[1], 500, matrix)
-    for stringFirstList in s1:
-        stringFirstList = stringFirstList.replace(")", "")
-        if "OR" in stringFirstList:
-            first = stringFirstList.split("OR", 1)
-            for string in first:
+        m = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[0],
+                                              select_target_attribute.split(",", 1)[0],
+                                              500, m)
+        m = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[1],
+                                              select_target_attribute.split(",", 1)[1],
+                                              500, m)
+    for attribute_found_source in split_source_queries:
+        attribute_found_source = attribute_found_source.replace(")", "")
+        if "OR" in attribute_found_source:
+            first_part = attribute_found_source.split("OR", 1)
+            for string in first_part:
                 if "AND" in string:
                     string = string.split("AND", 1)
                     for substring in string:
-                        matrix = function.find_attribute(substring, s21[indice], matrix)
+                        m = function.find_attribute_lvl1(substring, split_target_queries[indice], m)
                 else:
-                    matrix = function.find_attribute(string, s21[indice], matrix)
-        elif "AND" in stringFirstList:
-            first = stringFirstList.split("AND", 1)
-            for string in first:
-                matrix = function.find_attribute(string, s21[indice], matrix)
+                    m = function.find_attribute_lvl1(string, split_target_queries[indice], m)
+        elif "AND" in attribute_found_source:
+            first_part = attribute_found_source.split("AND", 1)
+            for string in first_part:
+                m = function.find_attribute_lvl1(string, split_target_queries[indice], m)
         else:
-            matrix = function.find_attribute(stringFirstList, s21[indice], matrix)
+            m = function.find_attribute_lvl1(attribute_found_source, split_target_queries[indice], m)
+    return m
+
+
+def main():
+    table_names = ["imdb"]
+    selection = 1
+    source_queries = process(select_source(selection), select_example(selection), table_names)
+    for string in source_queries:
+        print(string)
+    target_queries = filter_none(query_creator(select_target(selection), select_line(selection)))
+    print(target_queries)
+    split_source_queries = split_queries_source(source_queries)
+    split_target_queries = split_queries_target(target_queries)
+    query_values = match(split_target_queries, split_source_queries)
+    print(query_values)
+    query_values.sort()
+    indice = query_values.index(max(query_values))
+
+    select_source_attribute = source_queries[0].split("FROM", 1)[0].split("SELECT", 1)[1]
+    select_target_attribute = target_queries[indice][0].split("FROM", 1)[0].split("SELECT", 1)[1]
+    print(select_source_attribute)
+    print(select_target_attribute)
+
+    matrix = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
+                                     split_target_queries, indice)
     # matrix.to_csv("data/matrix.csv", index_label=False)
     print(matrix)
+
+
+main()
