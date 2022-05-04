@@ -15,7 +15,7 @@ def load_filename(file_name, output_file):
     db = pd.get_dummies(db, prefix_sep='*')
     db.to_csv(output_file, index=False)
     schema, data = load_schema(output_file)
-    table = [[int(el) for el in row] for row in data[1:]]
+    table = [[int(float(el)) for el in row] for row in data[1:]]
     return schema, table
 
 
@@ -91,44 +91,52 @@ def query_creator(db_file, example_file):
 def select_source(num):
     example = ""
     if num == 1:
-        example = "data/Movies/imdbSource.csv"
+        example = "data/jodieSource.csv"
     elif num == 2:
-        example = "data/Jodie/jodieSource.csv"
+        example = "burt/BurtReynoldsSource.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
+    elif num == 4:
+        example = "data/Movies/imdbSource.csv"
     return example
 
 
 def select_example(num):
     example = ""
     if num == 1:
-        example = "data/Movies/movieExample.csv"
+        example = "data/JodieExample.csv"
     elif num == 2:
-        example = "data/Jodie/JodieExample.csv"
+        example = "burt/BurtExample.csv"
     elif num == 3:
-        example = "ridley/RidleyExample.csv"
+        example = "ridley/RidleySource.csv"
+    elif num == 4:
+        example = "data/Movies/movieExample.csv"
     return example
 
 
 def select_target(num):  # Target
     example = ""
     if num == 1:
-        example = "data/Movies/imdb_top_1000Target.csv"
+        example = "data/JodieTarget.csv"
     elif num == 2:
-        example = "data/Jodie/JodieTarget.csv"
+        example = "burt/BurtReynoldsTarget.csv"
     elif num == 3:
         example = "ridley/RidleyTarget.csv"
+    elif num == 4:
+        example = "data/Movies/imdbTarget.csv"
     return example
 
 
 def select_line(num):  # Line
     example = ""
     if num == 1:
-        example = "data/Movies/movieLine.csv"
+        example = "data/JodieLine.csv"
     elif num == 2:
-        example = "data/Jodie/JodieLine.csv"
+        example = "burt/BurtLine.csv"
     elif num == 3:
         example = "ridley/RidleyLine.csv"
+    elif num == 4:
+        example = "data/Movies/movieLine.csv"
     return example
 
 
@@ -219,7 +227,7 @@ def build_similarity_matrix(select_source_attribute, select_target_attribute, sp
 
 def main():
     table_names = ["imdb"]
-    selection = 2
+    selection = 4
     source_queries = process(select_source(selection), select_example(selection), table_names)
     for string in source_queries:
         print(string)
