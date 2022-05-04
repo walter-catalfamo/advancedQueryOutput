@@ -1,10 +1,15 @@
-tconst,originalTitle,startYear,runtimeMinutes,Genre,Director,Writer,Actor
-Id,0,0,0,0,0,0,0.0,0.0
-Name,0,0,0,0,0,0,0.0,0.0
-Year,0,0,0,0,0,0,0.0,0.0
-Release Date,0,0,0,0,0,0,0.0,0.0
-Duration,0.0,0.0,0,0,0,0.0,0.0,0.0
-newDirector,0,0,0,0,0,0,0.0,0.0
-newCreator,0,0,0,0,0,0,0.0,0.0
-newActors,0,0,0,0,0,0,0.0,0.0
-newGenre,0.0,0.0,0,0,0,0.0,0.0,0.0
+Poster_Link,Series_Title,Released_Year,Certificate,Runtime,Genre,IMDB_Rating,Overview,Meta_score,Director,Star1,Star2,Star3,Star4,No_of_Votes,Gross
+Name,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Date,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Rate,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Votes,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Genre,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Duration,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Type,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Certificate,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Episodes,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Nudity,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Violence,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Profanity,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Alcohol,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0
+Frightening,0,0,0,0,0,0,0.0,0.0,0.0,0,0,0,0,0.0,0

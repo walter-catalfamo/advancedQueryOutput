@@ -91,7 +91,7 @@ def query_creator(db_file, example_file):
 def select_source(num):
     example = ""
     if num == 1:
-        example = "data/jodieSource.csv"
+        example = "data/Movies/imdbSource.csv"
     elif num == 2:
         example = "burt/BurtReynoldsSource.csv"
     elif num == 3:
@@ -102,7 +102,7 @@ def select_source(num):
 def select_example(num):
     example = ""
     if num == 1:
-        example = "data/JodieExample.csv"
+        example = "data/Movies/movieExample.csv"
     elif num == 2:
         example = "burt/BurtExample.csv"
     elif num == 3:
@@ -113,7 +113,7 @@ def select_example(num):
 def select_target(num):  # Target
     example = ""
     if num == 1:
-        example = "data/JodieTarget.csv"
+        example = "data/Movies/imdb_top_1000Target.csv"
     elif num == 2:
         example = "burt/BurtReynoldsTarget.csv"
     elif num == 3:
@@ -124,7 +124,7 @@ def select_target(num):  # Target
 def select_line(num):  # Line
     example = ""
     if num == 1:
-        example = "data/JodieLine.csv"
+        example = "data/Movies/movieLine.csv"
     elif num == 2:
         example = "burt/BurtLine.csv"
     elif num == 3:
