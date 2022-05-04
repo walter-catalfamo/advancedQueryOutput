@@ -93,7 +93,7 @@ def select_source(num):
     if num == 1:
         example = "data/Movies/imdbSource.csv"
     elif num == 2:
-        example = "burt/BurtReynoldsSource.csv"
+        example = "data/Jodie/jodieSource.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
     return example
@@ -104,7 +104,7 @@ def select_example(num):
     if num == 1:
         example = "data/Movies/movieExample.csv"
     elif num == 2:
-        example = "burt/BurtExample.csv"
+        example = "data/Jodie/JodieExample.csv"
     elif num == 3:
         example = "ridley/RidleyExample.csv"
     return example
@@ -115,7 +115,7 @@ def select_target(num):  # Target
     if num == 1:
         example = "data/Movies/imdb_top_1000Target.csv"
     elif num == 2:
-        example = "burt/BurtReynoldsTarget.csv"
+        example = "data/Jodie/JodieTarget.csv"
     elif num == 3:
         example = "ridley/RidleyTarget.csv"
     return example
@@ -126,7 +126,7 @@ def select_line(num):  # Line
     if num == 1:
         example = "data/Movies/movieLine.csv"
     elif num == 2:
-        example = "burt/BurtLine.csv"
+        example = "data/Jodie/JodieLine.csv"
     elif num == 3:
         example = "ridley/RidleyLine.csv"
     return example
@@ -219,7 +219,7 @@ def build_similarity_matrix(select_source_attribute, select_target_attribute, sp
 
 def main():
     table_names = ["imdb"]
-    selection = 1
+    selection = 2
     source_queries = process(select_source(selection), select_example(selection), table_names)
     for string in source_queries:
         print(string)
