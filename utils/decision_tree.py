@@ -156,7 +156,6 @@ def make_tree(table):
         yield kind
         return
     gen = attribute_score(table)
-
     left = []
     right = []
     threshold = []
