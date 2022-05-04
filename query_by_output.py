@@ -15,7 +15,18 @@ def load_filename(file_name, output_file):
     db = pd.get_dummies(db, prefix_sep='*')
     db.to_csv(output_file, index=False)
     schema, data = load_schema(output_file)
-    table = [[int(float(el)) for el in row] for row in data[1:]]
+    table = []
+    for row in data[1:]:
+        partial = []
+        for el in row:
+            try:
+                partial.append(int(el))
+            except ValueError:
+                if el == "":
+                    partial.append(0)
+                else:
+                    partial.append(int(float(el)))
+        table.append(partial)
     return schema, table
 
 
@@ -110,7 +121,7 @@ def select_example(num):
     elif num == 3:
         example = "ridley/RidleySource.csv"
     elif num == 4:
-        example = "data/Movies/movieExample.csv"
+        example = "data/Movies/imdbExample.csv"
     return example
 
 
@@ -136,7 +147,7 @@ def select_line(num):  # Line
     elif num == 3:
         example = "ridley/RidleyLine.csv"
     elif num == 4:
-        example = "data/Movies/movieLine.csv"
+        example = "data/Movies/imdbLine.csv"
     return example
 
 
@@ -202,7 +213,8 @@ def find_attribute_caller(split_source_queries, split_target_queries, maximum_va
                 if "AND" in string:
                     string = string.split("AND", 1)
                     for substring in string:
-                        matrix = function.find_attribute_lvl1(substring, split_target_queries[maximum_value_position], matrix)
+                        matrix = function.find_attribute_lvl1(substring, split_target_queries[maximum_value_position],
+                                                              matrix)
                 else:
                     matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix)
         elif "AND" in attribute_found_source:
@@ -210,17 +222,21 @@ def find_attribute_caller(split_source_queries, split_target_queries, maximum_va
             for string in first_part:
                 matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix)
         else:
-            matrix = function.find_attribute_lvl1(attribute_found_source, split_target_queries[maximum_value_position], matrix)
+            matrix = function.find_attribute_lvl1(attribute_found_source, split_target_queries[maximum_value_position],
+                                                  matrix)
     return matrix
 
 
-def build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries, split_target_queries, maximum_value_position):
-    matrix = pd.read_csv("data/initial_matrix.csv")
+def build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
+                            split_target_queries, maximum_value_position):
+    matrix = pd.read_csv("data/Movies/initial_matrix.csv")
     if "," not in select_source_attribute and "," not in select_target_attribute:
         matrix = similarity_matrix.increase_matrix(select_source_attribute, select_target_attribute, 500, matrix)
     else:
-        matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[0], select_target_attribute.split(",", 1)[0], 500, matrix)
-        matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[1], select_target_attribute.split(",", 1)[1], 500, matrix)
+        matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[0],
+                                                   select_target_attribute.split(",", 1)[0], 500, matrix)
+        matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[1],
+                                                   select_target_attribute.split(",", 1)[1], 500, matrix)
     matrix = find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix)
     return matrix
 
@@ -243,7 +259,8 @@ def main():
     print(select_source_attribute)
     select_target_attribute = target_queries[maximum_value_position][0].split("FROM", 1)[0].split("SELECT", 1)[1]
     print(select_target_attribute)
-    matrix = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries, split_target_queries,
+    matrix = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
+                                     split_target_queries,
                                      maximum_value_position)
     # matrix.to_csv("data/matrix.csv", index_label=False)
     print(matrix)
