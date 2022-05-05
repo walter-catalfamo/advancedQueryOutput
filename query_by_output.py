@@ -244,6 +244,7 @@ def build_similarity_matrix(select_source_attribute, select_target_attribute, sp
 def main():
     table_names = ["imdb"]
     selection = 4
+    distance_algorithm = 3
     source_queries = process(select_source(selection), select_example(selection), table_names)
     for string in source_queries:
         print(string)

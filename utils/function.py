@@ -3,18 +3,27 @@ from fuzzywuzzy import fuzz
 from utils.similarity_matrix import increase_matrix
 
 
-def calculation_and_lvl5_different(substring, s1split):
-    if "!=" in substring:
-        substring = substring.split("!=", 1)[1]
-        return fuzz.ratio(s1split, substring)
+def distance_calculator(s1split, string, distance_calculator_switch):
+    if distance_calculator_switch == 1:
+        return fuzz.ratio(s1split, string)
+    """
+    elif distance_calculator_switch == 2:
+        return deep learning
+    """
+
+
+def calculation_and_lvl5_different(string, s1split):
+    if "!=" in string:
+        string = string.split("!=", 1)[1]
+        return fuzz.ratio(s1split, string)
     else:
         return 0
 
 
-def calculation_and_lvl5_equal(substring, s1split):
-    if "=" in substring:
-        substring = substring.split("=", 1)[1]
-        return fuzz.ratio(s1split, substring)
+def calculation_and_lvl5_equal(string, s1split):
+    if "=" in string:
+        string = string.split("=", 1)[1]
+        return fuzz.ratio(s1split, string)
     else:
         return 0
 
@@ -121,7 +130,7 @@ def find_attribute_lvl5_greater(string, s1split, s1attribute, matrix):
     if float(s1split) < float(string):
         partial = 0
     else:
-        partial = 100
+        partial = 100 * fuzz.ratio(s1split, string)  # da verificare
     matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
     return matrix
 
@@ -130,7 +139,7 @@ def find_attribute_lvl5_less(string, s1split, s1attribute, matrix):
     s2attribute = string.split("<", 1)[0]
     string = string.split("<", 1)[1].replace(" ", "")
     if float(s1split) < float(string):
-        partial = 100
+        partial = 100 * fuzz.ratio(s1split, string)  # da verificare
     else:
         partial = 0
     matrix = increase_matrix(s1attribute, s2attribute, partial, matrix)
