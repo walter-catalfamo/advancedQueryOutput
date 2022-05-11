@@ -1,16 +1,18 @@
-import pandas as pd
-# List of Tuples
-students = [('jack', 34, 'Sydney', 155),
-            ('Riti', 31, 'Delhi', 177.5),
-            ('Aadi', 16, 'Mumbai', 81),
-            ('Mohit', 31, 'Delhi', 167),
-            ('Veena', 12, 'Delhi', 144),
-            ('Shaunak', 35, 'Mumbai', 135),
-            ('Shaun', 35, 'Colombo', 111)
-            ]
-# Create a DataFrame object
-studentDfObj = pd.DataFrame(students, columns=['Name', 'Age', 'City', 'Score'])
+def selector(num):
+    prefix = "data/"
+    if num == 1:
+        prefix += "Jodie/"
+    elif num == 2:
+        prefix += "Burt/"
+    elif num == 3:
+        prefix += "Ridley/"
+    elif num == 4:
+        prefix += "Movies/"
+    source = prefix + "Source.csv"
+    example = prefix + "Example.csv"
+    target = prefix + "Target.csv"
+    line = prefix + "Line.csv"
+    return source, example, target, line
 
-listOfDFRows = studentDfObj.to_numpy().tolist()
-print(listOfDFRows)
-print(type(listOfDFRows))
+
+print(selector(3))

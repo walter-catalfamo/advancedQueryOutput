@@ -111,6 +111,12 @@ def process_col(db_file, dbname, ex):
     return query_producer(db_schema, example_table, example_schema, db_table, dbname)
 
 
+def process_col2(db_file, dbname, example_file):
+    (db_schema, db_table) = load_filename(db_file)
+    (example_schema, example_table) = load_filename(example_file)
+    return query_producer(db_schema, example_table, example_schema, db_table, dbname)
+
+
 def query_creator(db_file, example_file):
     print()
     df = pd.read_csv(db_file)
@@ -135,8 +141,9 @@ def query_creator(db_file, example_file):
     li = []
     for y in combination:
         ex = pd.DataFrame([find], columns=list(y))
-        # ex.to_csv("data/col.csv", index=False)
-        s = process_col(db_file, db_name, ex)
+        ex.to_csv("data/col.csv", index=False)
+        s = process_col2(db_file, db_name, "data/col.csv")
+        # s = process_col(db_file, db_name, ex)
         li.append(s)
     return li
 
@@ -146,7 +153,7 @@ def select_source(num):
     if num == 1:
         example = "data/Jodie/JodieSource.csv"
     elif num == 2:
-        example = "data/Burt/BurtReynoldsSource.csv"
+        example = "data/Burt/Source.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
     elif num == 4:
@@ -159,7 +166,7 @@ def select_example(num):
     if num == 1:
         example = "data/Jodie/JodieExample.csv"
     elif num == 2:
-        example = "data/Burt/BurtExample.csv"
+        example = "data/Burt/Example.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
     elif num == 4:
@@ -172,7 +179,7 @@ def select_target(num):  # Target
     if num == 1:
         example = "data/Jodie/JodieTarget.csv"
     elif num == 2:
-        example = "data/Burt/BurtReynoldsTarget.csv"
+        example = "data/Burt/Target.csv"
     elif num == 3:
         example = "ridley/RidleyTarget.csv"
     elif num == 4:
@@ -185,7 +192,7 @@ def select_line(num):  # Line
     if num == 1:
         example = "data/Jodie/JodieLine.csv"
     elif num == 2:
-        example = "data/Burt/BurtLine.csv"
+        example = "data/Burt/Line.csv"
     elif num == 3:
         example = "ridley/RidleyLine.csv"
     elif num == 4:
@@ -283,15 +290,32 @@ def build_similarity_matrix(select_source_attribute, select_target_attribute, sp
     return matrix
 
 
-def main():
-    table_names = ["myDB"]
-    selection = 4
-    distance_calculator_switch = 1
+def selector(num):
+    prefix = "data/"
+    if num == 1:
+        prefix += "Jodie/"
+    elif num == 2:
+        prefix += "Burt/"
+    elif num == 3:
+        prefix += "Ridley/"
+    elif num == 4:
+        prefix += "Movies/"
+    source = prefix + "Source.csv"
+    example = prefix + "Example.csv"
+    target = prefix + "Target.csv"
+    line = prefix + "Line.csv"
+    return source, example, target, line
 
-    source_queries = process(select_source(selection), select_example(selection), table_names)
+
+def main():
+    selection = 1
+    distance_calculator_switch = 1
+    table_names = ["myDB"]
+    (source, example, target, line) = selector(selection)
+    source_queries = process(source, example, table_names)
     for string in source_queries:
         print(string)
-    target_queries = filter_none(query_creator(select_target(selection), select_line(selection)))
+    target_queries = filter_none(query_creator(target, line))
     print(target_queries)
     split_source_queries = split_queries_source(source_queries)
     split_target_queries = split_queries_target(target_queries)
