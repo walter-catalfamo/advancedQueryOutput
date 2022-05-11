@@ -4,30 +4,53 @@ import csv
 import itertools
 
 
-def load_filename(file_name, output_file):
+def read_row(row):
+    partial = []
+    for el in row:
+        try:
+            partial.append(int(el))
+        except ValueError:
+            if el == "":
+                partial.append(0)
+            else:
+                partial.append(int(float(el)))
+    return partial
+
+
+def filter_nan(my_list):
+    res = []
+    for x in my_list:
+        if str(x) != "nan":
+            res.append(x)
+        else:
+            res.append(0)
+    return res
+
+
+def filter_multi_list_nan(my_list):
+    res = []
+    for x in my_list:
+        res.append(filter_nan(x))
+    return res
+
+
+def read_db(db):
+    schema = list(db.columns.values)
+    # noinspection PyTypeChecker
+    data = filter_multi_list_nan(db.to_numpy().tolist())
+    return schema, data
+
+
+def load_filename(file_name):
     """
     Loads a csv file and separates the attribute names from the actual rows
     :param file_name:
-    :param output_file:
     :return:
     """
     db = pd.read_csv(file_name)
     db = pd.get_dummies(db, prefix_sep='*')
-    db.to_csv(output_file, index=False)
-    schema, data = load_schema(output_file)
-    table = []
-    for row in data[1:]:
-        partial = []
-        for el in row:
-            try:
-                partial.append(int(el))
-            except ValueError:
-                if el == "":
-                    partial.append(0)
-                else:
-                    partial.append(int(float(el)))
-        table.append(partial)
-    return schema, table
+    # db.to_csv(output_file, index=False)
+    return read_db(db)
 
 
 def load_schema(file_name):
@@ -35,14 +58,10 @@ def load_schema(file_name):
         reader = csv.reader(f)
         data = list(reader)
     schema = [x.strip() for x in data[0]]
-    return schema, data
+    return schema
 
 
-def process(db_file, example_file, dbname):
-    print()
-    print("----------Loading: " + db_file + "," + example_file + " tables: " + str(dbname) + "----------")
-    (db_schema, db_table) = load_filename(db_file, 'data/big.csv')
-    (example_schema, example_table) = load_filename(example_file, 'data/enc.csv')
+def query_producer(db_schema, example_table, example_schema, db_table, dbname):
     print("------DB-------")
     print(db_schema)
     print("------EXAMPLE------")
@@ -62,17 +81,40 @@ def process(db_file, example_file, dbname):
     print("-------TREE-------")
     for node in tree:
         print(node)
-    example_schema, _ = load_schema(example_file)
     queries = []
     for node in range(len(tree)):
         queries.append(query.tree_to_query(example_schema, dbname, db_schema, tree[node]))
     return queries
 
 
+def process(db_file, example_file, dbname):
+    (db_schema, db_table) = load_filename(db_file)
+    (example_schema, example_table) = load_filename(example_file)
+    return query_producer(db_schema, example_table, example_schema, db_table, dbname)
+
+
+def filter_digit(multi_list):
+    res = []
+    for x in multi_list:
+        if x[0].isdigit():
+            res.append(int(x[0]))
+        else:
+            res.append(x[0])
+    return [res]
+
+
+def process_col(db_file, dbname, ex):
+    (db_schema, db_table) = load_filename(db_file)
+    # (example_schema, example_table) = load_filename(example_file)
+    (example_schema, example_table) = read_db(ex)
+    example_table = filter_digit(example_table)
+    return query_producer(db_schema, example_table, example_schema, db_table, dbname)
+
+
 def query_creator(db_file, example_file):
     print()
     df = pd.read_csv(db_file)
-    find, pppp = load_schema(example_file)
+    find = load_schema(example_file)
     final = []
     for y in find:
         found = []
@@ -93,8 +135,8 @@ def query_creator(db_file, example_file):
     li = []
     for y in combination:
         ex = pd.DataFrame([find], columns=list(y))
-        ex.to_csv("data/col.csv", index=False)
-        s = process(db_file, "data/col.csv", db_name)
+        # ex.to_csv("data/col.csv", index=False)
+        s = process_col(db_file, db_name, ex)
         li.append(s)
     return li
 
@@ -102,9 +144,9 @@ def query_creator(db_file, example_file):
 def select_source(num):
     example = ""
     if num == 1:
-        example = "data/jodieSource.csv"
+        example = "data/Jodie/JodieSource.csv"
     elif num == 2:
-        example = "burt/BurtReynoldsSource.csv"
+        example = "data/Burt/BurtReynoldsSource.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
     elif num == 4:
@@ -115,9 +157,9 @@ def select_source(num):
 def select_example(num):
     example = ""
     if num == 1:
-        example = "data/JodieExample.csv"
+        example = "data/Jodie/JodieExample.csv"
     elif num == 2:
-        example = "burt/BurtExample.csv"
+        example = "data/Burt/BurtExample.csv"
     elif num == 3:
         example = "ridley/RidleySource.csv"
     elif num == 4:
@@ -128,9 +170,9 @@ def select_example(num):
 def select_target(num):  # Target
     example = ""
     if num == 1:
-        example = "data/JodieTarget.csv"
+        example = "data/Jodie/JodieTarget.csv"
     elif num == 2:
-        example = "burt/BurtReynoldsTarget.csv"
+        example = "data/Burt/BurtReynoldsTarget.csv"
     elif num == 3:
         example = "ridley/RidleyTarget.csv"
     elif num == 4:
@@ -141,9 +183,9 @@ def select_target(num):  # Target
 def select_line(num):  # Line
     example = ""
     if num == 1:
-        example = "data/JodieLine.csv"
+        example = "data/Jodie/JodieLine.csv"
     elif num == 2:
-        example = "burt/BurtLine.csv"
+        example = "data/Burt/BurtLine.csv"
     elif num == 3:
         example = "ridley/RidleyLine.csv"
     elif num == 4:
@@ -172,7 +214,7 @@ def split_queries_target(tq):
     return split_where_attributes_target
 
 
-def match(tq, sq):
+def match(tq, sq, distance_calculator_switch):
     qv = []
     for attribute_found_target in tq:
         match_points = []
@@ -186,25 +228,25 @@ def match(tq, sq):
                         string = string.split("AND", 1)
                         partial_point = []
                         for substring in string:
-                            partial_point.append(function.calculation_and_lvl1(substring, attribute_found_target))
+                            partial_point.append(function.calculation_and_lvl1(substring, attribute_found_target, distance_calculator_switch))
                         point.append(sum(partial_point) / len(string))
                     else:
-                        point.append(function.calculation_and_lvl1(string, attribute_found_target))
+                        point.append(function.calculation_and_lvl1(string, attribute_found_target, distance_calculator_switch))
                 match_points.append(max(point))
             elif "AND" in attribute_found_source:
                 first_part = attribute_found_source.split("AND", 1)
                 partial_point = []
                 for string in first_part:
-                    partial_point.append(function.calculation_and_lvl1(string, attribute_found_target))
+                    partial_point.append(function.calculation_and_lvl1(string, attribute_found_target, distance_calculator_switch))
                 match_points.append(sum(partial_point) / len(first_part))
             else:
-                match_points.append(function.calculation_and_lvl1(attribute_found_source, attribute_found_target))
+                match_points.append(function.calculation_and_lvl1(attribute_found_source, attribute_found_target, distance_calculator_switch))
         print(match_points)
         qv.append(match_points)
     return qv
 
 
-def find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix):
+def find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix, distance_calculator_switch):
     for attribute_found_source in split_source_queries:
         attribute_found_source = attribute_found_source.replace(")", "").replace(")", "")
         if "OR" in attribute_found_source:
@@ -214,22 +256,22 @@ def find_attribute_caller(split_source_queries, split_target_queries, maximum_va
                     string = string.split("AND", 1)
                     for substring in string:
                         matrix = function.find_attribute_lvl1(substring, split_target_queries[maximum_value_position],
-                                                              matrix)
+                                                              matrix, distance_calculator_switch)
                 else:
-                    matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix)
+                    matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix, distance_calculator_switch)
         elif "AND" in attribute_found_source:
             first_part = attribute_found_source.split("AND", 1)
             for string in first_part:
-                matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix)
+                matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix, distance_calculator_switch)
         else:
             matrix = function.find_attribute_lvl1(attribute_found_source, split_target_queries[maximum_value_position],
-                                                  matrix)
+                                                  matrix, distance_calculator_switch)
     return matrix
 
 
 def build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
-                            split_target_queries, maximum_value_position):
-    matrix = pd.read_csv("data/Movies/initial_matrix.csv")
+                            split_target_queries, maximum_value_position, distance_calculator_switch):
+    matrix = pd.read_csv("data/Burt/initial_matrix.csv")
     if "," not in select_source_attribute and "," not in select_target_attribute:
         matrix = similarity_matrix.increase_matrix(select_source_attribute, select_target_attribute, 500, matrix)
     else:
@@ -237,14 +279,15 @@ def build_similarity_matrix(select_source_attribute, select_target_attribute, sp
                                                    select_target_attribute.split(",", 1)[0], 500, matrix)
         matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[1],
                                                    select_target_attribute.split(",", 1)[1], 500, matrix)
-    matrix = find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix)
+    matrix = find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix, distance_calculator_switch)
     return matrix
 
 
 def main():
-    table_names = ["imdb"]
+    table_names = ["myDB"]
     selection = 4
-    distance_algorithm = 3
+    distance_calculator_switch = 1
+
     source_queries = process(select_source(selection), select_example(selection), table_names)
     for string in source_queries:
         print(string)
@@ -252,7 +295,7 @@ def main():
     print(target_queries)
     split_source_queries = split_queries_source(source_queries)
     split_target_queries = split_queries_target(target_queries)
-    query_values = match(split_target_queries, split_source_queries)
+    query_values = match(split_target_queries, split_source_queries, distance_calculator_switch)
     print(query_values)
     query_values.sort()
     maximum_value_position = query_values.index(max(query_values))
@@ -260,9 +303,8 @@ def main():
     print(select_source_attribute)
     select_target_attribute = target_queries[maximum_value_position][0].split("FROM", 1)[0].split("SELECT", 1)[1]
     print(select_target_attribute)
-    matrix = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
-                                     split_target_queries,
-                                     maximum_value_position)
+    matrix = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries, split_target_queries,
+                                     maximum_value_position, distance_calculator_switch)
     # matrix.to_csv("data/matrix.csv", index_label=False)
     print(matrix)
 

@@ -20,7 +20,7 @@ def find_threshold(table, attribute_column):
 
 def divide(table, attribute_column):
     """
-    Given a decorated table and a column index to use, splits the table according to the optimal threshold
+Given a decorated table and a column index to use, splits the table according to the optimal threshold
     :param table: the decorated table
     :param attribute_column: the column to use
     :return: a decorated table containing the rows with row[attributeColumn]<=threshold, a

@@ -3,7 +3,7 @@ from utils import decision_tree
 
 def from_segment(tables):
     """
-    Builds the from part of the query
+    Builds the FROM part of the query
     :param tables: a list of table names
     :return: "From table1 join table2 join ...
     """
@@ -34,48 +34,48 @@ def tree_to_where(joined_schema, tree):
 
     attribute_name = joined_schema[tree.attributeColumn]
 
-    (lquery, lres) = tree_to_where(joined_schema, tree.left)
-    (rquery, rres) = tree_to_where(joined_schema, tree.right)
+    (l_query, l_res) = tree_to_where(joined_schema, tree.left)
+    (r_query, r_res) = tree_to_where(joined_schema, tree.right)
 
-    if lquery != "":  # if the left subtree is not a leaf , prepare to build attribute_name<=threshold AND ...
-        lquery = " AND " + lquery
+    if l_query != "":  # if the left subtree is not a leaf , prepare to build attribute_name<=threshold AND ...
+        l_query = " AND " + l_query
 
-    if rquery != "":  # if the right subtree is not a leaf  , prepare to build attribute_name>threshold AND ...
-        rquery = " AND " + rquery
+    if r_query != "":  # if the right subtree is not a leaf  , prepare to build attribute_name>threshold AND ...
+        r_query = " AND " + r_query
 
-    if not lres and not rres:
+    if not l_res and not r_res:
         return "FALSE", False
 
-    squery = "("
+    s_query = "("
 
-    if lres:  # if the left subtree is relevant ( has a path to a positive leaf) add it
+    if l_res:  # if the left subtree is relevant ( has a path to a positive leaf) add it
         if '*' in attribute_name:
             index = attribute_name.find('*')
             copy = attribute_name[0:index]
             second = attribute_name[index + 1:]
-            squery = squery + "(" + copy + " != " + second
-            squery = squery + lquery + ")"
+            s_query = s_query + "(" + copy + " != " + second
+            s_query = s_query + l_query + ")"
         else:
-            squery = squery + "(" + attribute_name + " <= " + str(tree.threshold)
-            squery = squery + lquery + ")"
+            s_query = s_query + "(" + attribute_name + " <= " + str(tree.threshold)
+            s_query = s_query + l_query + ")"
 
-    if lres and rres:  # if both subtrees are relevant add an OR condition
-        squery = squery + " OR "
+    if l_res and r_res:  # if both subtrees are relevant add an OR condition
+        s_query = s_query + " OR "
 
-    if rres:  # if the right subtree is relevant
+    if r_res:  # if the right subtree is relevant
         if '*' in attribute_name:
             index = attribute_name.find('*')
             copy = attribute_name[0:index]
             second = attribute_name[index + 1:]
-            squery = squery + "(" + copy + " = " + second
-            squery = squery + rquery + ")"
+            s_query = s_query + "(" + copy + " = " + second
+            s_query = s_query + r_query + ")"
         else:
-            squery = squery + "(" + attribute_name + " > " + str(tree.threshold)
-            squery = squery + rquery + ")"
+            s_query = s_query + "(" + attribute_name + " > " + str(tree.threshold)
+            s_query = s_query + r_query + ")"
 
-    squery = squery + ")"
+    s_query = s_query + ")"
 
-    return squery, True
+    return s_query, True
 
 
 def where_segment(joined_schema, tree):
