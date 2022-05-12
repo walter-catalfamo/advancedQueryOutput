@@ -1,0 +1,104 @@
+iso_code,country,2020_population,density_sq_km,growth_rate,world_%
+CHN,China,"1,439,323,776",149/sq_km,0.29%,18.21%
+IND,India,"1,380,004,385",428/sq_km,0.95%,17.68%
+USA,United States,"331,002,651",36/sq_km,0.57%,4.21%
+IDN,Indonesia,"273,523,615",147/sq_km,1.00%,3.51%
+PAK,Pakistan,"220,892,340",260/sq_km,1.90%,2.89%
+NGA,Nigeria,"206,139,589",235/sq_km,2.53%,2.73%
+BRA,Brazil,"212,559,417",25/sq_km,0.64%,2.71%
+BGD,Bangladesh,"164,689,383","1,138/sq_km",0.95%,2.11%
+RUS,Russia,"145,934,462",9/sq_km,-0.07%,1.83%
+MEX,Mexico,"128,932,753",67/sq_km,1.00%,1.65%
+JPN,Japan,"126,476,461",332/sq_km,-0.37%,1.58%
+ETH,Ethiopia,"114,963,588",109/sq_km,2.49%,1.52%
+PHL,Philippines,"109,581,078",329/sq_km,1.32%,1.41%
+EGY,Egypt,"102,334,404",106/sq_km,1.82%,1.33%
+VNM,Vietnam,"97,338,579",299/sq_km,0.80%,1.24%
+IRN,Iran,"83,992,949",52/sq_km,1.17%,1.08%
+TUR,Turkey,"84,339,067",109/sq_km,0.61%,1.08%
+DEU,Germany,"83,783,942",235/sq_km,-0.02%,1.05%
+THA,Thailand,"69,799,978",137/sq_km,0.18%,0.88%
+GBR,United Kingdom,"67,886,011",282/sq_km,0.43%,0.86%
+FRA,France,"65,273,511",119/sq_km,0.24%,0.82%
+TZA,Tanzania,"59,734,218",67/sq_km,2.93%,0.80%
+ZAF,South Africa,"59,308,690",50/sq_km,1.19%,0.76%
+ITA,Italy,"60,461,826",200/sq_km,-0.17%,0.76%
+KEN,Kenya,"53,771,296",97/sq_km,2.24%,0.71%
+MMR,Myanmar,"54,409,800",82/sq_km,0.77%,0.69%
+COL,Colombia,"50,882,891",45/sq_km,0.48%,0.65%
+KOR,South Korea,"51,269,185",512/sq_km,0.05%,0.65%
+UGA,Uganda,"45,741,007",201/sq_km,2.78%,0.61%
+ESP,Spain,"46,754,778",92/sq_km,-0.06%,0.59%
+ARG,Argentina,"45,195,774",17/sq_km,0.89%,0.58%
+SDN,Sudan,"43,849,260",24/sq_km,2.41%,0.58%
+DZA,Algeria,"43,851,044",19/sq_km,1.64%,0.57%
+UKR,Ukraine,"43,733,762",72/sq_km,-0.63%,0.54%
+IRQ,Iraq,"40,222,493",96/sq_km,2.39%,0.53%
+AFG,Afghanistan,"38,928,346",62/sq_km,2.31%,0.51%
+CAN,Canada,"37,742,154",4/sq_km,0.84%,0.48%
+MAR,Morocco,"36,910,560",85/sq_km,1.15%,0.47%
+POL,Poland,"37,846,611",121/sq_km,-0.15%,0.47%
+SAU,Saudi Arabia,"34,813,871",17/sq_km,1.43%,0.45%
+AGO,Angola,"32,866,272",28/sq_km,3.22%,0.44%
+UZB,Uzbekistan,"33,469,203",77/sq_km,1.32%,0.43%
+PER,Peru,"32,971,854",26/sq_km,0.97%,0.42%
+MYS,Malaysia,"32,365,999",100/sq_km,1.24%,0.42%
+MOZ,Mozambique,"31,255,435",41/sq_km,2.88%,0.42%
+GHA,Ghana,"31,072,940",136/sq_km,2.09%,0.41%
+YEM,Yemen,"29,825,964",59/sq_km,2.18%,0.39%
+NPL,Nepal,"29,136,808",205/sq_km,1.86%,0.38%
+VEN,Venezuela,"28,435,940",32/sq_km,1.96%,0.37%
+MDG,Madagascar,"27,691,018",50/sq_km,2.64%,0.37%
+CMR,Cameroon,"26,545,863",59/sq_km,2.52%,0.35%
+CIV,Ivory Coast,"26,378,274",86/sq_km,2.55%,0.35%
+NER,Niger,"24,206,644",21/sq_km,3.79%,0.33%
+AUS,Australia,"25,499,884",3/sq_km,1.09%,0.33%
+PRK,North Korea,"25,778,816",216/sq_km,0.40%,0.33%
+TWN,Taiwan,"23,816,775",660/sq_km,0.14%,0.30%
+BFA,Burkina Faso,"20,903,273",81/sq_km,2.82%,0.28%
+LKA,Sri Lanka,"21,413,249",329/sq_km,0.37%,0.27%
+MLI,Mali,"20,250,833",17/sq_km,2.96%,0.27%
+MWI,Malawi,"19,129,952",170/sq_km,2.71%,0.25%
+ZMB,Zambia,"18,383,955",26/sq_km,2.90%,0.24%
+SYR,Syria,"17,500,658",105/sq_km,5.96%,0.24%
+CHL,Chile,"19,116,201",25/sq_km,0.20%,0.24%
+KAZ,Kazakhstan,"18,776,707",7/sq_km,1.11%,0.24%
+ROU,Romania,"19,237,691",80/sq_km,-0.50%,0.24%
+GTM,Guatemala,"17,915,568",171/sq_km,1.83%,0.23%
+ECU,Ecuador,"17,643,054",65/sq_km,1.26%,0.23%
+SEN,Senegal,"16,743,927",90/sq_km,2.66%,0.22%
+TCD,Chad,"16,425,864",14/sq_km,2.95%,0.22%
+NLD,Netherlands,"17,134,872",411/sq_km,0.22%,0.22%
+KHM,Cambodia,"16,718,965",95/sq_km,1.31%,0.22%
+SOM,Somalia,"15,893,222",26/sq_km,2.95%,0.21%
+ZWE,Zimbabwe,"14,862,924",39/sq_km,1.59%,0.19%
+GIN,Guinea,"13,132,795",56/sq_km,2.73%,0.17%
+RWA,Rwanda,"12,952,218",516/sq_km,2.44%,0.17%
+BEN,Benin,"12,123,200",114/sq_km,2.68%,0.16%
+BDI,Burundi,"11,890,784",454/sq_km,3.01%,0.16%
+TUN,Tunisia,"11,818,619",74/sq_km,0.93%,0.15%
+BOL,Bolivia,"11,673,021",11/sq_km,1.35%,0.15%
+HTI,Haiti,"11,402,528",421/sq_km,1.20%,0.15%
+BEL,Belgium,"11,589,623",382/sq_km,0.31%,0.15%
+SSD,South Sudan,"11,193,725",19/sq_km,2.08%,0.15%
+CUB,Cuba,"11,326,616",103/sq_km,-0.10%,0.14%
+DOM,Dominican Republic,"10,847,910",227/sq_km,0.94%,0.14%
+CZE,Czech Republic,"10,708,981",136/sq_km,0.11%,0.13%
+GRC,Greece,"10,423,054",78/sq_km,-0.52%,0.13%
+JOR,Jordan,"10,203,134",115/sq_km,0.31%,0.13%
+AZE,Azerbaijan,"10,139,177",119/sq_km,0.75%,0.13%
+HND,Honduras,"9,904,607",91/sq_km,1.57%,0.13%
+SWE,Sweden,"10,099,265",23/sq_km,0.58%,0.13%
+PRT,Portugal,"10,196,709",110/sq_km,-0.27%,0.13%
+ARE,United Arab Emirates,"9,890,402",121/sq_km,0.91%,0.13%
+TJK,Tajikistan,"9,537,645",70/sq_km,2.13%,0.13%
+HUN,Hungary,"9,660,351",103/sq_km,-0.29%,0.12%
+BLR,Belarus,"9,449,323",45/sq_km,-0.11%,0.12%
+PNG,Papua New Guinea,"8,947,024",20/sq_km,1.90%,0.12%
+AUT,Austria,"9,006,398",108/sq_km,0.26%,0.11%
+ISR,Israel,"8,655,535",430/sq_km,1.51%,0.11%
+CHE,Switzerland,"8,654,622",213/sq_km,0.67%,0.11%
+TGO,Togo,"8,278,724",153/sq_km,2.39%,0.11%
+SRB,Serbia,"8,737,371",98/sq_km,-0.51%,0.11%
+SLE,Sierra Leone,"7,976,983",116/sq_km,2.03%,0.10%
+HKG,Hong Kong,"7,496,981","6,888/sq_km",0.68%,0.10%

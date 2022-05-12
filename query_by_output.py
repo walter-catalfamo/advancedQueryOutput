@@ -158,6 +158,8 @@ def select_source(num):
         example = "ridley/RidleySource.csv"
     elif num == 4:
         example = "data/Movies/imdbSource.csv"
+    elif num == 5:
+        example = "data/Population/Source.csv"
     return example
 
 
@@ -171,6 +173,8 @@ def select_example(num):
         example = "ridley/RidleySource.csv"
     elif num == 4:
         example = "data/Movies/imdbExample.csv"
+    elif num == 5:
+        example = "data/Population/Example.csv"
     return example
 
 
@@ -184,6 +188,8 @@ def select_target(num):  # Target
         example = "ridley/RidleyTarget.csv"
     elif num == 4:
         example = "data/Movies/imdbTarget.csv"
+    elif num == 5:
+        example = "data/Population/Target.csv"
     return example
 
 
@@ -197,6 +203,8 @@ def select_line(num):  # Line
         example = "ridley/RidleyLine.csv"
     elif num == 4:
         example = "data/Movies/imdbLine.csv"
+    elif num == 5:
+        example = "data/Population/Line.csv"
     return example
 
 
@@ -278,7 +286,7 @@ def find_attribute_caller(split_source_queries, split_target_queries, maximum_va
 
 def build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
                             split_target_queries, maximum_value_position, distance_calculator_switch):
-    matrix = pd.read_csv("data/Burt/initial_matrix.csv")
+    matrix = pd.read_csv("data/Population/initial_matrix.csv")
     if "," not in select_source_attribute and "," not in select_target_attribute:
         matrix = similarity_matrix.increase_matrix(select_source_attribute, select_target_attribute, 500, matrix)
     else:
@@ -300,6 +308,8 @@ def selector(num):
         prefix += "Ridley/"
     elif num == 4:
         prefix += "Movies/"
+    elif num == 5:
+        prefix += "Population/"
     source = prefix + "Source.csv"
     example = prefix + "Example.csv"
     target = prefix + "Target.csv"
@@ -308,7 +318,7 @@ def selector(num):
 
 
 def main():
-    selection = 1
+    selection = 5
     distance_calculator_switch = 1
     table_names = ["myDB"]
     (source, example, target, line) = selector(selection)
