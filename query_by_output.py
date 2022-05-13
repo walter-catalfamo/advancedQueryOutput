@@ -148,58 +148,6 @@ def query_creator(db_file, example_file):
     return li
 
 
-def select_source(num):
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieSource.csv"
-    elif num == 2:
-        example = "data/Burt/Source.csv"
-    elif num == 3:
-        example = "ridley/RidleySource.csv"
-    elif num == 4:
-        example = "data/Movies/imdbSource.csv"
-    return example
-
-
-def select_example(num):
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieExample.csv"
-    elif num == 2:
-        example = "data/Burt/Example.csv"
-    elif num == 3:
-        example = "ridley/RidleySource.csv"
-    elif num == 4:
-        example = "data/Movies/imdbExample.csv"
-    return example
-
-
-def select_target(num):  # Target
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieTarget.csv"
-    elif num == 2:
-        example = "data/Burt/Target.csv"
-    elif num == 3:
-        example = "ridley/RidleyTarget.csv"
-    elif num == 4:
-        example = "data/Movies/imdbTarget.csv"
-    return example
-
-
-def select_line(num):  # Line
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieLine.csv"
-    elif num == 2:
-        example = "data/Burt/Line.csv"
-    elif num == 3:
-        example = "ridley/RidleyLine.csv"
-    elif num == 4:
-        example = "data/Movies/imdbLine.csv"
-    return example
-
-
 def filter_none(my_list):
     return [x for x in my_list if x is not None]
 

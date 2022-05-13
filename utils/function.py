@@ -3,9 +3,9 @@ from fuzzywuzzy import fuzz
 from utils.similarity_matrix import increase_matrix
 
 
-def distance_calculator(s1split, string, distance_calculator_switch):
+def distance_calculator(string_1, string_2, distance_calculator_switch):
     if distance_calculator_switch == 1:
-        return fuzz.ratio(s1split, string)
+        return fuzz.ratio(string_1, string_2)
     """
     elif distance_calculator_switch == 2:
         return deep learning
@@ -98,7 +98,7 @@ def calculation_and_lvl1(first, second, distance_calculator_switch):
         s1split = first.split(">", 1)[1].replace(" ", "")
         switch = 3
     elif "<" in first:
-        s1split = first.split("<>>", 1)[1].replace(" ", "")
+        s1split = first.split("<", 1)[1].replace(" ", "")
         switch = 4
     else:
         return 0
