@@ -1,6 +1,6 @@
 from fuzzywuzzy import fuzz
 
-from utils.similarity_matrix import increase_matrix
+from utils.matrix import increase_matrix
 
 
 def distance_calculator(string_1, string_2, distance_calculator_switch):
@@ -106,6 +106,38 @@ def calculation_and_lvl1(first, second, distance_calculator_switch):
     return max(tot)
 
 
+def match(tq, sq, distance_calculator_switch):
+    qv = []
+    for attribute_found_target in tq:
+        match_points = []
+        for attribute_found_source in sq:
+            attribute_found_source = attribute_found_source.replace("(", "").replace(")", "")
+            if "OR" in attribute_found_source:
+                first_part = attribute_found_source.split("OR", 1)
+                point = []
+                for string in first_part:
+                    if "AND" in string:
+                        string = string.split("AND", 1)
+                        partial_point = []
+                        for substring in string:
+                            partial_point.append(calculation_and_lvl1(substring, attribute_found_target, distance_calculator_switch))
+                        point.append(sum(partial_point) / len(string))
+                    else:
+                        point.append(calculation_and_lvl1(string, attribute_found_target, distance_calculator_switch))
+                match_points.append(max(point))
+            elif "AND" in attribute_found_source:
+                first_part = attribute_found_source.split("AND", 1)
+                partial_point = []
+                for string in first_part:
+                    partial_point.append(calculation_and_lvl1(string, attribute_found_target, distance_calculator_switch))
+                match_points.append(sum(partial_point) / len(first_part))
+            else:
+                match_points.append(calculation_and_lvl1(attribute_found_source, attribute_found_target, distance_calculator_switch))
+        print(match_points)
+        qv.append(match_points)
+    return qv
+
+
 """"""""""""
 
 
@@ -209,3 +241,26 @@ def find_attribute_lvl1(first, second, matrix, distance_calculator_switch):
         return matrix
     matrix = find_attribute_lvl2(second, s1attribute, switch, s1split, matrix, distance_calculator_switch)
     return matrix
+
+
+def find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, m, distance_calculator_switch):
+    for attribute_found_source in split_source_queries:
+        attribute_found_source = attribute_found_source.replace(")", "").replace(")", "")
+        if "OR" in attribute_found_source:
+            first_part = attribute_found_source.split("OR", 1)
+            for string in first_part:
+                if "AND" in string:
+                    string = string.split("AND", 1)
+                    for substring in string:
+                        m = find_attribute_lvl1(substring, split_target_queries[maximum_value_position],
+                                                         m, distance_calculator_switch)
+                else:
+                    m = find_attribute_lvl1(string, split_target_queries[maximum_value_position], m, distance_calculator_switch)
+        elif "AND" in attribute_found_source:
+            first_part = attribute_found_source.split("AND", 1)
+            for string in first_part:
+                m = find_attribute_lvl1(string, split_target_queries[maximum_value_position], m, distance_calculator_switch)
+        else:
+            m = find_attribute_lvl1(attribute_found_source, split_target_queries[maximum_value_position],
+                                             m, distance_calculator_switch)
+    return m

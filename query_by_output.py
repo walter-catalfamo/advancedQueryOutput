@@ -1,7 +1,10 @@
-from utils import decision_tree, function, similarity_matrix, query
 import pandas as pd
 import csv
 import itertools
+
+from utils import query, decision_tree
+from utils.function import find_attribute_caller, match
+from utils.matrix import increase_matrix
 
 
 def read_row(row):
@@ -42,11 +45,6 @@ def read_db(db):
 
 
 def load_filename(file_name):
-    """
-    Loads a csv file and separates the attribute names from the actual rows
-    :param file_name:
-    :return:
-    """
     db = pd.read_csv(file_name)
     db = pd.get_dummies(db, prefix_sep='*')
     # db.to_csv(output_file, index=False)
@@ -74,14 +72,19 @@ def query_producer(db_schema, example_table, example_schema, db_table, dbname):
         return
     print("------DECORATED TABLE------")
     db_schema.insert(0, "I SHOULD NOT BE VISIBLE")
+    """"""
+
     gen_tree = decision_tree.make_tree(annotated_table)
     tree = []
     for node in gen_tree:
         tree.append(node)
     print("-------TREE-------")
+
     for node in tree:
         print(node)
     queries = []
+    """"""
+
     for node in range(len(tree)):
         queries.append(query.tree_to_query(example_schema, dbname, db_schema, tree[node]))
     return queries
@@ -148,58 +151,6 @@ def query_creator(db_file, example_file):
     return li
 
 
-def select_source(num):
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieSource.csv"
-    elif num == 2:
-        example = "data/Burt/Source.csv"
-    elif num == 3:
-        example = "ridley/RidleySource.csv"
-    elif num == 4:
-        example = "data/Movies/imdbSource.csv"
-    return example
-
-
-def select_example(num):
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieExample.csv"
-    elif num == 2:
-        example = "data/Burt/Example.csv"
-    elif num == 3:
-        example = "ridley/RidleySource.csv"
-    elif num == 4:
-        example = "data/Movies/imdbExample.csv"
-    return example
-
-
-def select_target(num):  # Target
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieTarget.csv"
-    elif num == 2:
-        example = "data/Burt/Target.csv"
-    elif num == 3:
-        example = "ridley/RidleyTarget.csv"
-    elif num == 4:
-        example = "data/Movies/imdbTarget.csv"
-    return example
-
-
-def select_line(num):  # Line
-    example = ""
-    if num == 1:
-        example = "data/Jodie/JodieLine.csv"
-    elif num == 2:
-        example = "data/Burt/Line.csv"
-    elif num == 3:
-        example = "ridley/RidleyLine.csv"
-    elif num == 4:
-        example = "data/Movies/imdbLine.csv"
-    return example
-
-
 def filter_none(my_list):
     return [x for x in my_list if x is not None]
 
@@ -221,73 +172,18 @@ def split_queries_target(tq):
     return split_where_attributes_target
 
 
-def match(tq, sq, distance_calculator_switch):
-    qv = []
-    for attribute_found_target in tq:
-        match_points = []
-        for attribute_found_source in sq:
-            attribute_found_source = attribute_found_source.replace(")", "")
-            if "OR" in attribute_found_source:
-                first_part = attribute_found_source.split("OR", 1)
-                point = []
-                for string in first_part:
-                    if "AND" in string:
-                        string = string.split("AND", 1)
-                        partial_point = []
-                        for substring in string:
-                            partial_point.append(function.calculation_and_lvl1(substring, attribute_found_target, distance_calculator_switch))
-                        point.append(sum(partial_point) / len(string))
-                    else:
-                        point.append(function.calculation_and_lvl1(string, attribute_found_target, distance_calculator_switch))
-                match_points.append(max(point))
-            elif "AND" in attribute_found_source:
-                first_part = attribute_found_source.split("AND", 1)
-                partial_point = []
-                for string in first_part:
-                    partial_point.append(function.calculation_and_lvl1(string, attribute_found_target, distance_calculator_switch))
-                match_points.append(sum(partial_point) / len(first_part))
-            else:
-                match_points.append(function.calculation_and_lvl1(attribute_found_source, attribute_found_target, distance_calculator_switch))
-        print(match_points)
-        qv.append(match_points)
-    return qv
-
-
-def find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix, distance_calculator_switch):
-    for attribute_found_source in split_source_queries:
-        attribute_found_source = attribute_found_source.replace(")", "").replace(")", "")
-        if "OR" in attribute_found_source:
-            first_part = attribute_found_source.split("OR", 1)
-            for string in first_part:
-                if "AND" in string:
-                    string = string.split("AND", 1)
-                    for substring in string:
-                        matrix = function.find_attribute_lvl1(substring, split_target_queries[maximum_value_position],
-                                                              matrix, distance_calculator_switch)
-                else:
-                    matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix, distance_calculator_switch)
-        elif "AND" in attribute_found_source:
-            first_part = attribute_found_source.split("AND", 1)
-            for string in first_part:
-                matrix = function.find_attribute_lvl1(string, split_target_queries[maximum_value_position], matrix, distance_calculator_switch)
-        else:
-            matrix = function.find_attribute_lvl1(attribute_found_source, split_target_queries[maximum_value_position],
-                                                  matrix, distance_calculator_switch)
-    return matrix
-
-
 def build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries,
                             split_target_queries, maximum_value_position, distance_calculator_switch):
-    matrix = pd.read_csv("data/Burt/initial_matrix.csv")
+    m = pd.read_csv("data/Burt/initial_matrix.csv")
     if "," not in select_source_attribute and "," not in select_target_attribute:
-        matrix = similarity_matrix.increase_matrix(select_source_attribute, select_target_attribute, 500, matrix)
+        m = increase_matrix(select_source_attribute, select_target_attribute, 500, m)
     else:
-        matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[0],
-                                                   select_target_attribute.split(",", 1)[0], 500, matrix)
-        matrix = similarity_matrix.increase_matrix(select_source_attribute.split(",", 1)[1],
-                                                   select_target_attribute.split(",", 1)[1], 500, matrix)
-    matrix = find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, matrix, distance_calculator_switch)
-    return matrix
+        m = increase_matrix(select_source_attribute.split(",", 1)[0],
+                            select_target_attribute.split(",", 1)[0], 500, m)
+        m = increase_matrix(select_source_attribute.split(",", 1)[1],
+                            select_target_attribute.split(",", 1)[1], 500, m)
+    m = find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, m, distance_calculator_switch)
+    return m
 
 
 def selector(num):
@@ -327,10 +223,10 @@ def main():
     print(select_source_attribute)
     select_target_attribute = target_queries[maximum_value_position][0].split("FROM", 1)[0].split("SELECT", 1)[1]
     print(select_target_attribute)
-    matrix = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries, split_target_queries,
-                                     maximum_value_position, distance_calculator_switch)
+    m = build_similarity_matrix(select_source_attribute, select_target_attribute, split_source_queries, split_target_queries,
+                                maximum_value_position, distance_calculator_switch)
     # matrix.to_csv("data/matrix.csv", index_label=False)
-    print(matrix)
+    print(m)
 
 
 main()
