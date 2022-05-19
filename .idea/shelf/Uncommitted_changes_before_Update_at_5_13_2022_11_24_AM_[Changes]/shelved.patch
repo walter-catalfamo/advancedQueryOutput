@@ -1,0 +1,130 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"e9c909e4-f0b7-4009-856d-0cbe77a2a638\" name=\"Changes\" comment=\"a\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Burt/BurtExample.csv\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/data/Burt/Example.csv\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Burt/BurtLine.csv\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/data/Burt/Line.csv\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Burt/BurtReynoldsSource.csv\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/data/Burt/Source.csv\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Burt/BurtReynoldsTarget.csv\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/data/Burt/Target.csv\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Movies/imdbExample.csv\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Movies/imdbLine.csv\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Movies/imdbSource.csv\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/Movies/imdbTarget.csv\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/query_by_output.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/query_by_output.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/utils/test.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/utils/test.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"HARD\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"289OibtZk1W2I7IkvDt7YcwzdRZ\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <OptionsSetting value=\"false\" id=\"Update\" />\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"last_opened_file_path\": \"C:/Users/cataw/PycharmProjects/advancedQueryOutput/data/Burt\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"vcs.Git\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\\data\\Burt\" />\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\" />\r\n      <recent name=\"C:\\Users\\walter\\PycharmProjects\\advancedQueryOutput\\data\\Movies\" />\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\\data\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\\data\\Burt\" />\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\\data\\Jodie\" />\r\n      <recent name=\"C:\\Users\\walter\\PycharmProjects\\advancedQueryOutput\\data\\Burt\" />\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\\utils\" />\r\n      <recent name=\"C:\\Users\\cataw\\PycharmProjects\\advancedQueryOutput\\data\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.query_by_output\">\r\n    <configuration name=\"query_by_output\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"advancedQueryOutput\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/query_by_output.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"removeComments\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"advancedQueryOutput\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/removeComments.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"test\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"advancedQueryOutput\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/utils\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/utils/test.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Python.query_by_output\" />\r\n        <item itemvalue=\"Python.test\" />\r\n        <item itemvalue=\"Python.removeComments\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"e9c909e4-f0b7-4009-856d-0cbe77a2a638\" name=\"Changes\" comment=\"\" />\r\n      <created>1650625463016</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1650625463016</updated>\r\n      <workItem from=\"1650625465039\" duration=\"4696000\" />\r\n      <workItem from=\"1651332951332\" duration=\"2078000\" />\r\n      <workItem from=\"1651395761281\" duration=\"8062000\" />\r\n      <workItem from=\"1651404801392\" duration=\"10799000\" />\r\n      <workItem from=\"1651477756932\" duration=\"12508000\" />\r\n      <workItem from=\"1651699840394\" duration=\"1252000\" />\r\n      <workItem from=\"1652102134379\" duration=\"4000\" />\r\n      <workItem from=\"1652130191647\" duration=\"20000\" />\r\n      <workItem from=\"1652254821616\" duration=\"10773000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"a\">\r\n      <created>1651333931761</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651333931761</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"a\">\r\n      <created>1651407648210</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651407648210</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"a\">\r\n      <created>1651410817147</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651410817147</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"a\">\r\n      <created>1651413051911</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651413051911</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"a\">\r\n      <created>1651485732054</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651485732054</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"walter\">\r\n      <created>1651698801197</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651698801197</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Revert &quot;change csv&quot;&#10;&#10;This reverts commit b37c3414\">\r\n      <created>1651699002843</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651699002843</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"walter\">\r\n      <created>1651699018119</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1651699018119</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"a\">\r\n      <created>1652263808544</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1652263808544</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"10\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.History.Properties\">\r\n    <option name=\"COLUMN_ID_ORDER\">\r\n      <list>\r\n        <option value=\"Default.Root\" />\r\n        <option value=\"Default.Author\" />\r\n        <option value=\"Default.Date\" />\r\n        <option value=\"Default.Subject\" />\r\n        <option value=\"Space.CommitStatus\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"37e3db24-07eb-4086-b7a0-9c4af02fad54\">\r\n          <value>\r\n            <State>\r\n              <option name=\"SHOW_ONLY_AFFECTED_CHANGES\" value=\"true\" />\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"HEAD\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                  <entry key=\"roots\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"$PROJECT_DIR$\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"OPEN_GENERIC_TABS\">\r\n      <map>\r\n        <entry key=\"37e3db24-07eb-4086-b7a0-9c4af02fad54\" value=\"TOOL_WINDOW\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Revert &quot;change csv&quot;&#10;&#10;This reverts commit b37c3414\" />\r\n    <MESSAGE value=\"walter\" />\r\n    <MESSAGE value=\"a\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"a\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\r\n          <url>file://$PROJECT_DIR$/query_by_output.py</url>\r\n          <line>314</line>\r\n          <option name=\"timeStamp\" value=\"37\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n    <watches-manager>\r\n      <configuration name=\"PythonConfigurationType\">\r\n        <watch expression=\"x\" />\r\n      </configuration>\r\n    </watches-manager>\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/advancedQueryOutput$query_by_output.coverage\" NAME=\"query_by_output Coverage Results\" MODIFIED=\"1652266121726\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/advancedQueryOutput$test.coverage\" NAME=\"test Coverage Results\" MODIFIED=\"1652265619766\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$/utils\" />\r\n    <SUITE FILE_PATH=\"coverage/advancedQueryOutput$removeComments.coverage\" NAME=\"removeComments Coverage Results\" MODIFIED=\"1650627906963\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 059768e3c9955d3727d298be30a5a1f472bbbac2)
++++ b/.idea/workspace.xml	(date 1652433765877)
+@@ -3,15 +3,8 @@
+   <component name="ChangeListManager">
+     <list default="true" id="e9c909e4-f0b7-4009-856d-0cbe77a2a638" name="Changes" comment="a">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Burt/BurtExample.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/Burt/Example.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Burt/BurtLine.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/Burt/Line.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Burt/BurtReynoldsSource.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/Burt/Source.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Burt/BurtReynoldsTarget.csv" beforeDir="false" afterPath="$PROJECT_DIR$/data/Burt/Target.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Movies/imdbExample.csv" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Movies/imdbLine.csv" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Movies/imdbSource.csv" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/data/Movies/imdbTarget.csv" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/query_by_output.py" beforeDir="false" afterPath="$PROJECT_DIR$/query_by_output.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/utils/function.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/function.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/utils/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/test.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -43,18 +36,18 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "C:/Users/cataw/PycharmProjects/advancedQueryOutput/data/Burt",
+-    "nodejs_package_manager_path": "npm",
+-    "settings.editor.selected.configurable": "vcs.Git"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/cataw/PycharmProjects/advancedQueryOutput/data/Burt&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="C:\Users\cataw\PycharmProjects\advancedQueryOutput\data\Burt" />
+@@ -161,7 +154,8 @@
+       <workItem from="1651699840394" duration="1252000" />
+       <workItem from="1652102134379" duration="4000" />
+       <workItem from="1652130191647" duration="20000" />
+-      <workItem from="1652254821616" duration="10773000" />
++      <workItem from="1652254821616" duration="11337000" />
++      <workItem from="1652346348780" duration="3565000" />
+     </task>
+     <task id="LOCAL-00001" summary="a">
+       <created>1651333931761</created>
+@@ -226,7 +220,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1652263808544</updated>
+     </task>
+-    <option name="localTasksCounter" value="10" />
++    <task id="LOCAL-00010" summary="a">
++      <created>1652266303109</created>
++      <option name="number" value="00010" />
++      <option name="presentableId" value="LOCAL-00010" />
++      <option name="project" value="LOCAL" />
++      <updated>1652266303109</updated>
++    </task>
++    <option name="localTasksCounter" value="11" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -295,7 +296,7 @@
+       <breakpoints>
+         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+           <url>file://$PROJECT_DIR$/query_by_output.py</url>
+-          <line>314</line>
++          <line>262</line>
+           <option name="timeStamp" value="37" />
+         </line-breakpoint>
+       </breakpoints>
+@@ -307,7 +308,7 @@
+     </watches-manager>
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+-    <SUITE FILE_PATH="coverage/advancedQueryOutput$query_by_output.coverage" NAME="query_by_output Coverage Results" MODIFIED="1652266121726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
++    <SUITE FILE_PATH="coverage/advancedQueryOutput$query_by_output.coverage" NAME="query_by_output Coverage Results" MODIFIED="1652346979897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/advancedQueryOutput$test.coverage" NAME="test Coverage Results" MODIFIED="1652265619766" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+     <SUITE FILE_PATH="coverage/advancedQueryOutput$removeComments.coverage" NAME="removeComments Coverage Results" MODIFIED="1650627906963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+   </component>
+Index: utils/test.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>def selector(num):\r\n    prefix = \"data/\"\r\n    if num == 1:\r\n        prefix += \"Jodie/\"\r\n    elif num == 2:\r\n        prefix += \"Burt/\"\r\n    elif num == 3:\r\n        prefix += \"Ridley/\"\r\n    elif num == 4:\r\n        prefix += \"Movies/\"\r\n    source = prefix + \"Source.csv\"\r\n    example = prefix + \"Example.csv\"\r\n    target = prefix + \"Target.csv\"\r\n    line = prefix + \"Line.csv\"\r\n    return source, example, target, line\r\n\r\n\r\nprint(selector(3))\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/utils/test.py b/utils/test.py
+--- a/utils/test.py	(revision 059768e3c9955d3727d298be30a5a1f472bbbac2)
++++ b/utils/test.py	(date 1652346979874)
+@@ -1,18 +1,0 @@
+-def selector(num):
+-    prefix = "data/"
+-    if num == 1:
+-        prefix += "Jodie/"
+-    elif num == 2:
+-        prefix += "Burt/"
+-    elif num == 3:
+-        prefix += "Ridley/"
+-    elif num == 4:
+-        prefix += "Movies/"
+-    source = prefix + "Source.csv"
+-    example = prefix + "Example.csv"
+-    target = prefix + "Target.csv"
+-    line = prefix + "Line.csv"
+-    return source, example, target, line
+-
+-
+-print(selector(3))
