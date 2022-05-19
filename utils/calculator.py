@@ -1,15 +1,5 @@
-from fuzzywuzzy import fuzz
-
+from utils.distance import distance_calculator
 from utils.matrix import increase_matrix
-
-
-def distance_calculator(string_1, string_2, distance_calculator_switch):
-    if distance_calculator_switch == 1:
-        return fuzz.ratio(string_1, string_2)
-    """
-    elif distance_calculator_switch == 2:
-        return deep learning
-    """
 
 
 def calculation_and_lvl5_different(string, s1split, distance_calculator_switch):
@@ -106,7 +96,7 @@ def calculation_and_lvl1(first, second, distance_calculator_switch):
     return max(tot)
 
 
-def match(tq, sq, distance_calculator_switch):
+def calculation_and_lvl0(tq, sq, distance_calculator_switch):
     qv = []
     for attribute_found_target in tq:
         match_points = []
@@ -243,7 +233,7 @@ def find_attribute_lvl1(first, second, matrix, distance_calculator_switch):
     return matrix
 
 
-def find_attribute_caller(split_source_queries, split_target_queries, maximum_value_position, m, distance_calculator_switch):
+def find_attribute_lvl0(split_source_queries, split_target_queries, maximum_value_position, m, distance_calculator_switch):
     for attribute_found_source in split_source_queries:
         attribute_found_source = attribute_found_source.replace(")", "").replace(")", "")
         if "OR" in attribute_found_source:

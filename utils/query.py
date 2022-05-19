@@ -1,4 +1,4 @@
-from utils import decision_tree
+from utils.classification import decision_tree
 
 
 def from_segment(tables):
@@ -16,7 +16,10 @@ def select_segment(input_schema):
     :param input_schema: the columns of the joined schema to select
     :return: Select attr1, attr2,...
     """
-    return "SELECT " + ", ".join(input_schema) + " "
+    if type(input_schema) is list:
+        return "SELECT " + input_schema[0].split("*")[0] + " "
+    else:
+        return "SELECT " + input_schema.split("*")[0] + " "
 
 
 def tree_to_where(joined_schema, tree):
@@ -31,23 +34,16 @@ def tree_to_where(joined_schema, tree):
         if tree == 1:
             return "", True
         return "FALSE", False
-
     attribute_name = joined_schema[tree.attributeColumn]
-
     (l_query, l_res) = tree_to_where(joined_schema, tree.left)
     (r_query, r_res) = tree_to_where(joined_schema, tree.right)
-
     if l_query != "":  # if the left subtree is not a leaf , prepare to build attribute_name<=threshold AND ...
         l_query = " AND " + l_query
-
     if r_query != "":  # if the right subtree is not a leaf  , prepare to build attribute_name>threshold AND ...
         r_query = " AND " + r_query
-
     if not l_res and not r_res:
         return "FALSE", False
-
     s_query = "("
-
     if l_res:  # if the left subtree is relevant ( has a path to a positive leaf) add it
         if '*' in attribute_name:
             index = attribute_name.find('*')
@@ -58,10 +54,8 @@ def tree_to_where(joined_schema, tree):
         else:
             s_query = s_query + "(" + attribute_name + " <= " + str(tree.threshold)
             s_query = s_query + l_query + ")"
-
     if l_res and r_res:  # if both subtrees are relevant add an OR condition
         s_query = s_query + " OR "
-
     if r_res:  # if the right subtree is relevant
         if '*' in attribute_name:
             index = attribute_name.find('*')
@@ -72,9 +66,7 @@ def tree_to_where(joined_schema, tree):
         else:
             s_query = s_query + "(" + attribute_name + " > " + str(tree.threshold)
             s_query = s_query + r_query + ")"
-
     s_query = s_query + ")"
-
     return s_query, True
 
 
@@ -146,7 +138,7 @@ def decorate_table(example_table, remove_columns, joined_table):
             if join_row == row:
                 ls.append(index)
         if not ls:  # if an example row doesn't match any projection, the query is impossible
-            return row, False
+            return row
         for index in ls:
             kinds[index] = 1 if len(ls) == 1 else 0  # set all indexes to 0, or 1 if there is only one
 
@@ -155,4 +147,4 @@ def decorate_table(example_table, remove_columns, joined_table):
     for (row, kind) in zip(joined_table, kinds):
         row.insert(0, kind)
 
-    return joined_table, True
+    return joined_table

@@ -149,9 +149,10 @@ def make_tree(table):
     :param table: table to be analyzed
     :return: the Tree built
     """
-    if not table:
-        return -1
-    kind = purity_kind(table)
+    if type(table) is tuple:
+        kind = purity_kind(table[0])
+    else:
+        kind = purity_kind(table)
     if kind != 0:
         yield kind
         return
@@ -167,20 +168,18 @@ def make_tree(table):
         threshold.append(i[2])
         gini.append(i[3])
         attribute_column.append(i[4])
-    case = 1
-    if case == 1:
-        for i in range(len(left)):
-            update_free(left[i], 1)
-            update_free(right[i], 1)
+    for i in range(len(left)):
+        update_free(left[i], 1)
+        update_free(right[i], 1)
     num = nsmallest(3, gini)
     index = []
     for i in range(len(num)):
         index.append(gini.index(num[i]))
-        gini[gini.index(
-            num[i])] = 'a'
+        gini[gini.index(num[i])] = 'a'
     for i in index:
         if left[i] != [] and right[i] != []:
             left[i] = list(make_tree(left[i]))[0]
             right[i] = list(make_tree(right[i]))[0]
     for i in index:
-        yield Tree(left[i], right[i], threshold[i], attribute_column[i])
+        x = Tree(left[i], right[i], threshold[i], attribute_column[i])
+        yield x

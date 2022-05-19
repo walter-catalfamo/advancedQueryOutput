@@ -1,0 +1,10 @@
+tconst,originalTitle,startYear,runtimeMinutes,Genre,Director,Writer,Actor
+Id,0,0,0,0,0,0,0.0,0.0
+Name,0,0,0,0,0,0,0.0,0.0
+Year,0,0,0,0,0,0,0.0,0.0
+Release Date,0,0,0,0,0,0,0.0,0.0
+Duration,0.0,0.0,0,0,0,0.0,0.0,0.0
+newDirector,0,0,0,0,0,0,0.0,0.0
+newCreator,0,0,0,0,0,0,0.0,0.0
+newActors,0,0,0,0,0,0,0.0,0.0
+newGenre,0.0,0.0,0,0,0,0.0,0.0,0.0
